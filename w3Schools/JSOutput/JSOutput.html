@@ -1,0 +1,26 @@
+<html>
+ <head>
+  <script>
+    function windowAlert(){
+      window.alert(5+6)
+    }
+    function documentWrite(){
+      document.write(5+6)
+    }
+    function toInnerHTML(){
+      document.getElementById("demo").innerHTML = 5+6
+    }
+    function consoleLog(){
+      console.log(5 + 6)
+    }
+  </script>
+</head>
+  <body>
+    <h1>JavaScript Output</h1>
+    <p id="demo"></p>
+    <button type="button" onclick="windowAlert()">windowAlert</button>
+    <button type="button" onclick="toInnerHTML()">toInnerHTML</button>
+    <button type="button" onclick="consoleLog()">consoleLog</button>
+    <button type="button" onclick="documentWrite()">documentWrite</button>
+  </body>
+</html>

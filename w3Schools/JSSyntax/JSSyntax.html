@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+/*
+JavaScript syntax is the set of rules, how JavaScript programs are constructed.
+JavaScript is a programming language.
+JavaScript statements are separated by semicolons.
+
+Statements:
+JavaScript statements are composed of:
+Values, Operators, Expressions, Keywords, and Comments.
+
+Values:
+The JavaScript syntax defines two types of values: Fixed values and variable values.
+Fixed values are called literals. Variable values are called variables.
+
+*/
+<head>
+  <script>
+  var x = 4;//keyword :'var'
+  var y = 6;//variables
+  var z = x + y;//operators:'='
+  lastName = 'Jimmy';//case sensitive,different form 'lastname'
+  function calculate() {
+    document.getElementById("demo").innerHTML = z*10;
+    document.getElementById("name").innerHTML = lastName;
+  }
+  </script>
+</head>
+  <body>
+    <h1>JavaScript Statements</h1>
+    <p>Statements are separated by semicolons.</p>
+    <p id="demo"></p>
+    <p id="name"></p>
+    <button type="button" onclick="calculate()">calculate</button>
+  </body>
+</html>
