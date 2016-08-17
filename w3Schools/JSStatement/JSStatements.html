@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>JavaScript Statement</h1>
+  <p>In HTML, JavaScript statements are "commands" to the browser.</p>
+  <p id="write1"></p>
+  <p id="write2"></p>
+  <button type="button"onclick="myFunction()">Change it</button>
+  <script>
+    /*
+    JavaScript Statements
+    For best readability, programmers often like to avoid code lines longer than 80 characters.
+    */
+    document.getElementById("write1").innerHTML =
+    "Hello Jimmy.";//write content to element in html;
+
+    /*
+    JavaScript Programs;
+    the statement are executed, one by one , in the same order as they are written
+    */
+    var x = 4;//use semicolons to separate JavaScript Statements
+    var y = 6;
+    var z = x + y;
+    document.getElementById("write2").innerHTML = z;
+
+    /*
+      JavaScript Code Blocks
+    */
+    function myFunction() {
+      document.getElementById("write1").innerHTML = "Change to Other one";
+      document.getElementById("write2").innerHTML = "Change write2";
+    }
+
+    /*
+      JavaScript Keywords
+      Here is a list of some of the keywords you will learn about in this tutorial:
+      Keyword	        Description
+      break	          Terminates a switch or a loop
+      continue	      Jumps out of a loop and starts at the top
+      debugger	      Stops the execution of JavaScript, and calls (if available) the debugging function
+      do ... while	  Executes a block of statements, and repeats the block, while a condition is true
+      for	            Marks a block of statements to be executed, as long as a condition is true
+      function	      Declares a function
+      if ... else	    Marks a block of statements to be executed, depending on a condition
+      return	        Exits a function
+      switch	        Marks a block of statements to be executed, depending on different cases
+      try ... catch	  Implements error handling to a block of statements
+      var	            Declares a variable
+    */
+  </script>
+</body>
+</html>
