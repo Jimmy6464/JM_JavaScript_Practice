@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1><strong>JavaScript DataType</strong></h1>
+    <p>When adding a number and a string, JavaScript will treat the number as a string.</p>
+    <p id="demo"></p>
+    <p>JavaScript evaluates expressions from left to right.
+      Different sequences can produce different results:</p>
+    <p id="demo1"></p>
+    <p id="demo2"></p>
+    <p>You can use quotes inside a string,
+       as long as they don't match the quotes surrounding the string:
+     </p>
+     <p id="demo3"></p>
+
+     <h1>JavaScript Numbers</h1>
+     <p id="demo4"></p>
+
+     <h1>JavaScript Arrays</h1>
+     <p id="demo5"></p>
+
+     <h1>JavaScript Objects</h1>
+     <p>The object (person) in the example above has 4 properties: firstName, lastName, age, and eyeColor.</p>
+     <p id="demo6"></p>
+
+     <h1>The typeof Operator</h1>
+     <p>You can use the JavaScript typeof operator to find the type of a JavaScript variable:</p>
+     <p id="demo7"></p>
+
+     <h1>Undefined</h1>
+     <p>In JavaScript, a variable without a value, has the value undefined. The typeof is also undefined.</p>
+     <p id="demo8"></p>
+
+     <h1>Null and Undefined</h1>
+     <p>In JavaScript null is "nothing". It is supposed to be something that doesn't exist.
+
+Unfortunately, in JavaScript, the data type of null is an object.</p>
+     <p id="demo9"></p>
+
+    <script>
+      var x = 26 + "volvo";
+      var y = 21 + 23 + "king";
+      var z = 21 + 23 + "king" + 45 +4;
+      document.getElementById("demo").innerHTML = x;
+      document.getElementById("demo1").innerHTML ="21 + 23 + 'king' = "+ y;
+      document.getElementById("demo2").innerHTML ="21 + 23 + 'king' + 45 +4 = "+ z;
+
+      var carName1 = "Volvo XC60";
+      var carName2 = 'Volvo XC60';
+      var answer1 = "It's alright";
+      var answer2 = "He is called 'Johnny'";
+      var answer3 = 'He is called "Johnny"';
+      document.getElementById("demo3").innerHTML =
+      carName1 + "<br>" +
+      carName2 + "<br>" +
+      answer1 + "<br>" +
+      answer2 + "<br>" +
+      answer3;
+
+      //JS Numbers
+      /*
+      JavaScript has only one type of numbers.Numbers can be written with, or without decimals:
+      */
+      var x1 = 34.00;
+      var x2 = 34;
+      /*
+      Extra large or extra small numbers can be written with scientific (exponential) notation:
+      */
+      var y1 = 123e5;//12300000
+      var y2 = 123e-5;//0.00123
+      document.getElementById("demo4").innerHTML = x1+"<br>" +x2+"<br>" + y1 +"<br>" +y2;
+      /*
+        JavaScript Arrays
+        The typeof operator returns "object" for arrays because in JavaScript arrays are objects.
+      */
+      var cars = ['bens','vind','no'];
+      document.getElementById("demo5").innerHTML = "cars at index 0 = "+cars[0];
+      /*
+      JavaScript Objects
+      */
+      var person =  {firstNaem:"John",lastName:"Doe", age:30, eyeColor:"Blue"}
+      document.getElementById("demo6").innerHTML = person.firstNaem + " is " + person.age+
+      " years old";
+      /*
+        The typeof Operator
+      */
+      document.getElementById("demo7").innerHTML =
+      typeof "John" + "<br>" +
+      typeof 3.14 + "<br>" +
+      typeof false + "<br>" +
+      typeof [1,2,3,4] + "<br>" +
+      typeof {naem:"fd",age:12};
+      /*
+        Undefined
+      */
+      var person2;
+      document.getElementById("demo8").innerHTML =
+      person2 + "<br>" + typeof person2;
+      /*
+        Null and Undefined
+      */
+      document.getElementById("demo9").innerHTML =
+      typeof undefined + "<br>" +
+      typeof null + "<br>" +
+      (null === undefined) + "<br>" +//=== means strict equal
+      (null == undefined);
+    </script>
+  </body>
+</html>
