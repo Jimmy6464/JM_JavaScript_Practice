@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>JavaScript Functions</h1>
+    <p>This example calls a function which performs a calculation, and returns the result:</p>
+    <p id="demo1"></p>
+    <h2>Why Function ?</h2>
+    <p>This example calls a function to convert from Fahrenheit to Celsius:</p>
+    <p id="demo2"></p>
+    <h2>The () Operator Invokes the Function</h2>
+    <p>Accessing a function without (), will return the function definition:</p>
+    <p id="demo3"></p>
+    <h2>Functions Used as Variable Values</h2>
+    <p>Instead of using a variable to store the return value of a function:</p>
+    <p id="demo4"></p>
+    <script>
+      function textFunction1(p1,p2){
+        return p1 * p2;
+      }
+      document.getElementById("demo1").innerHTML = textFunction1(45,2);
+      function toCelsius(f){
+        return (5/9)*(f-32);
+      }
+      document.getElementById("demo2").innerHTML = toCelsius(77);
+      document.getElementById("demo3").innerHTML = toCelsius;//打印整个function的内容
+
+      var x = toCelsius(77);
+      var text = "The temperature is " + x + " Celsius";
+      var text2 = "The temperature is " + toCelsius(77) + " Celsius";
+      document.getElementById("demo4").innerHTML = "text : " + text + "<br>" + "text2 :"+text2;
+    </script>
+  </body>
+</html>

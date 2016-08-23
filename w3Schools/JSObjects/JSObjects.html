@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>JavaScript Objects</h1>
+  <p>Creating a JavaScript Object.</p>
+  <p id="demo1"></p>
+  <p id="demo2"></p>
+
+  <script>
+    var car = {type:"Fiat",model:"500",color:"white"
+    ,fullName:function() {
+      return this.type+" "+this.model;
+    }
+  };
+    document.getElementById("demo1").innerHTML = "type :" + car.type +
+    "<br>"+"model :"+car.model +
+    "<br>"+"color :"+car.color;
+    document.getElementById("demo2").innerHTML = "method :"+car.fullName();
+
+  </script>
+</body>
+</html>
