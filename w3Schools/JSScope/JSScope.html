@@ -1,0 +1,18 @@
+<?DOCTYPE html>
+  <html>
+    <head>
+      <title>JavaScript Scope</title>
+    </head>
+    <body>
+      <h1>JavaScript Scope</h1>
+      <p>With JavaScript, the global scope is the complete JavaScript environment.
+        In HTML, the global scope is the window object. All global variables belong to the window object.
+      </p>
+      <p id="demo"></p>
+      <script>
+        var carName = "volvo";
+        //code here can use window.carName
+        document.getElementById("demo").innerHTML = "I can display "+window.carName;
+      </script>
+    </body>
+  </html>

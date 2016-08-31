@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JavaScript Event</title>
+  </head>
+  <body>
+    <h1>JavaScript Event</h1>
+    <button onclick="document.getElementById('demo').innerHTML=Date()">search date</button>
+    <p id="demo"></p>
+    <p>call it with function</p>
+    <button onclick="showDate()">showDate</button>
+    <p id="demo1"></p>
+    <script>
+      function showDate() {
+        document.getElementById("demo1").innerHTML=Date();
+      }
+    </script>
+  </body>
+</html>
