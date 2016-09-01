@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>JavaScript Strings</h1>
+    <p id="demo"></p>
+    <p id="demo2"></p>
+    <p>Compare x = "John" and y = new String("John")</p>
+    <p id="compare1"></p>
+    <p id="compare2"></p>
+    <p id="compare3"></p>
+    <script>
+      var x = "John";//String
+      var y = new String("John");//object
+      var z = new String("John");//object
+
+
+      document.getElementById("demo").innerHTML =
+      typeof x + "<br>" + typeof y;
+      document.getElementById("demo2").innerHTML = "x's length is "+x.length;
+      document.getElementById("compare1").innerHTML = "x==y result is "+ (x==y);
+      document.getElementById("compare2").innerHTML = "x===y result is "+ (x===y);
+      document.getElementById("compare3").innerHTML = "y == z,compare object ,result is " +
+      (y == z);//JavaScript can not compare objects
+    </script>
+  </body>
+</html>
