@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1 onclick="myFun()">JavaScript String methods and Properties</h1>
+    <p id="demo"></p>
+
+    <script>
+      function myFun() {
+        var txt = "Jimmy is a handsome body";
+        /*
+        String Length
+        */
+        var tLength = txt.length;
+        /*
+        Finding a String in a String
+        */
+        var pos = txt.indexOf("a");//returns the index of (the position of) the first occurrence of a specified text in a string
+        var pos2 = txt.lastIndexOf("a");// returns the index of the last occurrence of a specified text in a string:
+        /*
+        Searching for a String in a String
+        */
+        var pos3 = txt.search("handsome");//searches a string for a specified value and returns the position of the match
+        /*
+        Extracting String Parts
+        */
+        var res = txt.slice(2,7);//This example slices out a portion of a string from position 7 to position 13:
+        var res2 = txt.slice(-6,-4);//If a parameter is negative, the position is counted from the end of the string.
+        var res3 = txt.slice(4);//If you omit the second parameter, the method will slice out the rest of the string:
+        //notices:Negative positions do not work in Internet Explorer 8 and earlier.
+
+        var res4 = txt.substring(3,5);// is similar to slice(). The difference is that substring() cannot accept negative indexes.
+        var res5 = txt.substr(4,5);// is similar to slice(). The difference is that the second parameter specifies the length of the extracted part.accept naegative indexes
+        /*
+        Replacing String Content
+        */
+        var n = txt.replace("handsome","crazy");//notices :The replace() method does not change the string it is called on. It returns a new string.
+        var n1 = txt.replace(/handsome/g,"smart");//take a regular expression as the search value
+        /*
+        Converting to Upper and Lower Case
+        returns a new string
+        */
+        var text1 = txt.toUpperCase();
+        var text2 = txt.toLowerCase();
+        var text3 = txt.concat("<br>",text2);// be used instead of the plus operator
+        document.getElementById("demo").innerHTML = text3;
+        //notices :All string methods return a new string. They don't modify the original string.
+        //Formally said: Strings are immutable: Strings cannot be changed, only replaced.
+        /*
+        Extracting String Characters
+        There are 2 safe methods for extracting string characters:
+        charAt(position)
+        charCodeAt(position)
+        */
+        var str1 = txt.charAt(0);//returns j
+        var str2 = txt.charAt(0);//returns its ASCII value
+        /*
+        Converting a String to an Array
+        */
+        var txt2 = "a,b,c,d,e";
+        txt2.split(",");//returns [a,b,c,d,e]
+        txt2.split("c");//returns ["a,b,",",d,e"]
+        txt2.split("e");//returns ["a,b,c,d,",""]
+        document.getElementById("demo").innerHTML = txt2;
+
+        var str = "Hello";
+        var arr = str.split("");
+        var text = "";
+        var i;
+        for (i = 0; i < arr.length; i++) {
+            text += arr[i] + "<br>"
+        }
+        document.getElementById("demo").innerHTML = text;
+      }
+    </script>
+  </body>
+</html>
