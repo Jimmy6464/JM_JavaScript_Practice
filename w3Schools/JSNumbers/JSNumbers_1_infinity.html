@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Infinity is returned if you calculate a number outside the largest possible number.</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+<p id="demo1"></p>
+<p id="demo2"></p>
+
+<script>
+function myFunction() {
+    var myNumber = 2;
+    var txt = "";
+    while (myNumber != Infinity) {//Infinity is a number: typeOf Infinity returns number.
+        myNumber = myNumber * myNumber;
+        txt = txt + myNumber + "<br>";
+    }
+    document.getElementById("demo").innerHTML = txt;
+    /*NaN - Not a Number*/
+    var x = NaN;//NaN is a number, and typeof NaN returns number:
+    var y = "5";
+    document.getElementById("demo1").innerHTML = x + y;//returns NaN
+
+    /*Numbers Can be Objects*/
+    var x = 500;              // x is a number
+    var y = new Number(500);  // y is an object
+    document.getElementById("demo2").innerHTML = (x==y);
+    /*JavaScript objects cannot be compared.*/
+}
+</script>
+
+</body>
+</html>
