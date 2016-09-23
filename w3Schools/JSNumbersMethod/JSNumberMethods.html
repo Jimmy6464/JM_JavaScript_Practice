@@ -2,10 +2,32 @@
 <html>
   <body>
     <h1>JavaScript Number Methods</h1>
-    <p>texting</p>
-    <p>normal test second, third</p>
-    <p>fourth</p>
-    <p>King</p>
-    <p>New</p>
+    <h2>The toString() Method</h2>
+    <p >The toString() method converts a number to a string.</p>
+    <p id="demo1"></p>
+    <h2>The toExponential() Method</h2>
+    <p>The toExponential() method returns a string, with the number rounded and written using exponential notation.</p>
+    <p>An optional parameter defines the number of digits behind the decimal point.</p>
+    <p id="demo2"></p>
+    <script>
+      function toStringFunName() {
+        var x = 123;
+        var str = x.toString();
+        document.getElementById("demo1").innerHTML = x.toString() +"<br>"+
+        (123).toString() + "<br>"+(29+1).toString()+"<br>x type: "+typeof x+
+        "<br>str type:"+typeof str;
+      }
+      toStringFunName();
+
+      function toExponentialFun() {
+        var x = 9.656;
+  document.getElementById("demo2").innerHTML =
+      x.toExponential() + "<br>" +
+      x.toExponential(2) + "<br>" +
+      x.toExponential(4) + "<br>" +
+      x.toExponential(6);
+      }
+      toExponentialFun();
+    </script>
   </body>
 </html>
