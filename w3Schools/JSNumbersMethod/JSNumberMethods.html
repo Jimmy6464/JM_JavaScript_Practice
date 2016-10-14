@@ -2,14 +2,19 @@
 <html>
   <body>
     <h1>JavaScript Number Methods</h1>
+
     <h2>The toString() Method</h2>
     <p >The toString() method converts a number to a string.</p>
     <p id="demo1"></p>
+
     <h2>The toExponential() Method</h2>
     <p>The toExponential() method returns a string, with the number rounded and written using exponential notation.</p>
     <p>An optional parameter defines the number of digits behind the decimal point.</p>
     <p id="demo2"></p>
 
+    <h2>The toFixed() Method</h2>
+    <p>toFixed() returns a string, with the number written with a specified number of decimals:</p>
+    <p id="demo3"></p>
     <script>
       function toStringFunName() {
         var x = 123;
@@ -29,6 +34,16 @@
         x.toExponential(6);
       }
       toExponentialFun();
+      /*The toFixed() Method*/
+      function toFixedFun () {
+        // body...
+        var x = 9.456;
+        var x1 = x.toFixed(0);//returns 10,向上取整
+        var x2 = x.toFixed(2);//returns 9.66 保留两位小数
+        var x3 = x.toFixed(3);//returns 9.656 保留两位小数
+        document.getElementById("demo3").innerHTML = "<br>x1 = "+x1+"<br>x2 = " + x2 + "<br>x3 = " + x3;
+      }
+      toFixedFun();
     </script>
   </body>
 </html>
