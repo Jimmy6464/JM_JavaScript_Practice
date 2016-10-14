@@ -4,21 +4,109 @@
 		<h1>JavaScript Math</h1>
 		<p>The JavaScript Math object allows you to perform mathematical tasks on numbers.</p>
 		<p id="demo1"></p>
+
 		<h2>Math.round() method</h2>
 		<p>Math.round(x) returns the value of x rounded to its nearest integer:</p>
 		<p id="demo2"></p>
+
+		<h2>Math.pow(x,y) method</h2>
+		<p>Math.pow(x,y) returns the value of x to the power of y:</p>
+		<p id="demo3"></p>
+
+		<h2>Math.sqrt(x) method</h2>
+		<p>Math.sqrt(x) returns the square root of x:</p>
+		<p id="demo4"></p>
+
+		<h2>Math.abs(x) method</h2>
+		<p>Math.abs(x) returns the absolute (positive) value of x:</p>
+		<p id="demo5"></p>
+
+		<h2>Math.ceil(x) method</h2>
+		<p>Math.ceil(x) returns the value of x rounded up to its nearest integer:</p>
+		<p id="demo6"></p>
+
+		<h2>Math.floor(x) method</h2>
+		<p>Math.floor(x) returns the value of x rounded down to its nearest integer:</p>
+		<p id="demo7"></p>
+
+
+		<h2>Math.cos and sind ,tan method</h2>
+
+		<p id="demo8"></p>
 		<script >
-			function showPIFun() {
+			function showPIFun () {
 				// body...
 				document.getElementById("demo1").innerHTML = Math.PI;
 			}
 			showPIFun();
 
+			/*Math.round(num) method*/
 			function MathroundFun (num) {
 				// body...
-				document.getElementById("demo2").innerHTML = Math.round(num);
+				document.getElementById("demo2").innerHTML = Math.round(num);//四舍五入
 			}
 			MathroundFun(4.7);
+
+			/*Math.pow(x,y) method*/
+			function mathPowFun () {
+				// body...
+				var x = 8;
+				var x1 = Math.pow(x,2);//returns 64
+				var x2 = Math.pow(x,3);//returns 512
+				document.getElementById("demo3").innerHTML = "<br> x1 = " + x1 + "<br> x2 = " + x2;
+			}
+			mathPowFun();
+
+			/*Math.sqrt(x,y) method*/
+			function mathSqrtFun () {
+				// body...
+				var x = 4;
+				var x1 = Math.sqrt(x);//returns 2,开方
+				
+				document.getElementById("demo4").innerHTML = "<br> x1 = " + x1;
+			}
+			mathSqrtFun();
+
+			/*Math.Abs(x) method*/
+			function mathAbsFun () {
+				// body...
+				var x = -4;
+				var x1 = Math.abs(x);//returns 4,取绝对值
+				
+				document.getElementById("demo5").innerHTML = "<br> x1 = " + x1;
+			}
+			mathAbsFun()
+
+			/*Math.ceil(x) method*/
+			function mathCeilFun () {
+				// body...
+				var x = 4.4;
+				var x1 = Math.ceil(x);//returns 5,向上取整(不改变正负)
+				
+				document.getElementById("demo6").innerHTML = "<br> x1 = " + x1;
+			}
+			mathCeilFun()
+
+			/*Math.floor(x) method*/
+			function mathfloorFun () {
+				// body...
+				var x = -4.7;
+				var x1 = Math.floor(x);//returns 4,向下取整(不改变正负)
+				
+				document.getElementById("demo7").innerHTML = "<br> x1 = " + x1;
+			}
+			mathfloorFun()
+
+			/*Math.cos and sind ,tan method*/
+			function mathfloorFun () {
+				// body...
+				var x = 90 * Math.PI/180;
+				var x1 = Math.cos(x);//
+				var x2 = Math.sin(x);
+				var x3 = Math.tan(x);
+				document.getElementById("demo8").innerHTML = "<br> cos = " + x1 +"<br>sin = "+ x2+"<br>tan = " + x3;
+			}
+			mathfloorFun()
 		</script>
 	</body>
 </html>
