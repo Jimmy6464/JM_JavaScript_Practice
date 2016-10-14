@@ -15,6 +15,32 @@
     <h2>The toFixed() Method</h2>
     <p>toFixed() returns a string, with the number written with a specified number of decimals:</p>
     <p id="demo3"></p>
+
+    <h2>The toPrecision() Method</h2>
+    <p>toPrecision() returns a string, with a number written with a specified length:</p>
+    <p id="demo4"></p>
+
+    <h2>The valueOf() Method</h2>
+    <p>valueOf() returns a number as a number.</p>
+    <p>All JavaScript data types have a valueOf() and a toString() method.</p>
+    <p id="demo5"></p>
+
+    <h1>Global Methods,Converting Variables to Numbers</h1>
+    <p >The Number() method<br>
+      The parseInt() method<br>
+      The parseFloat() method</p>
+
+    <h2>The Number() Method</h2>
+    <p>Number() can be used to convert JavaScript variables to numbers:</p>
+    <p id="demo6">jimmy</p>
+
+    <h2>The parseInt() Method</h2>
+    <p>parseInt() parses a string and returns a whole number. Spaces are allowed. Only the first number is returned:</p>
+    <p id="demo7"></p>
+
+    <h2>The parseFloat() Method</h2>
+    <p>parseFloat() parses a string and returns a whole number. Spaces are allowed. Only the first number is returned:</p>
+    <p id="demo8"></p>
     <script>
       function toStringFunName() {
         var x = 123;
@@ -34,16 +60,109 @@
         x.toExponential(6);
       }
       toExponentialFun();
+
       /*The toFixed() Method*/
       function toFixedFun () {
         // body...
         var x = 9.456;
         var x1 = x.toFixed(0);//returns 10,向上取整
         var x2 = x.toFixed(2);//returns 9.66 保留两位小数
-        var x3 = x.toFixed(3);//returns 9.656 保留两位小数
+        var x3 = x.toFixed(3);//returns 9.656 保留三位小数
         document.getElementById("demo3").innerHTML = "<br>x1 = "+x1+"<br>x2 = " + x2 + "<br>x3 = " + x3;
       }
       toFixedFun();
+
+      /*toPrecision() Method*/
+      function toPrecisionFun() {
+        var x = 9.456;
+        var x1 = x.toPrecision();//returns 9.456,
+        var x2 = x.toPrecision(2);//returns 9.66 保留两位数
+        var x3 = x.toPrecision(3);//returns 9.656 保留三位数
+        document.getElementById("demo4").innerHTML = "<br>x1 = "+x1+"<br>x2 = " + x2 + "<br>x3 = " + x3;
+      }
+      toPrecisionFun();
+
+      /*valueOf() Method*/
+      function valueOfFun() {
+        var x = 9.456;
+        var x1 = x.valueOf();//returns 9.456,
+        var x2 = (9.456).valueOf();//returns 9.456
+        var x3 = (9+0.456).valueOf();//returns 9.456
+        document.getElementById("demo5").innerHTML = "<br>x1 = "+x1+"<br>x2 = " + x2 + "<br>x3 = " + x3;
+      }
+      valueOfFun();
+      /*
+      Converting Variables to Numbers
+      There are 3 JavaScript methods that can be used to convert variables to numbers:
+
+      The Number() method
+      The parseInt() method
+      The parseFloat() method
+      These methods are not number methods, but global JavaScript methods.
+
+      Global Methods
+      JavaScript global methods can be used on all JavaScript data types.
+
+      These are the most relevant methods, when working with numbers:
+      eg.
+      Method	      Description
+      Number()	    Returns a number, converted from its argument.
+      parseFloat()	Parses its argument and returns a floating point number
+      parseInt()	  Parses its argument and returns an integer
+
+      */
+
+      /*Number() Method*/
+      function NumberFun() {
+        var x = true;
+        var x1 = Number(x);//returns 1,
+        var y = false;
+        var x2 = Number(y);//returns 0
+        var str1 = "10";
+        var x3 = Number(str1);//returns 10
+        var date = new Date();
+        var x4 = Number(date);//returns Used on Date(), the Number() method returns the number of milliseconds since 1.1.1970.
+        var str2 = "Jimmy";
+        var x5 = Number(str2);//returns NaN(not a number)
+        document.getElementById("demo6").innerHTML = "<br>x1 = "+x1+"<br>x2 = " + x2 + "<br>x3 = " + x3 + "<br>x4 = " + x4 + "<br>x5 = " + x5;
+      }
+      NumberFun();
+
+      /*parseInt() Method*/
+      function parseIntFun() {
+        var x = true;
+        var x1 = parseInt(x);//returns NaN,
+        var y = false;
+        var x2 = parseInt(y);//returns NaN
+        var str1 = "10";
+        var x3 = parseInt(str1);//returns 10
+        var date = new Date();
+        var x4 = parseInt(date);//NaN
+        var str2 = "10 Jimmy";
+        var x5 = parseInt(str2);//returns NaN(not a number)
+        document.getElementById("demo7").innerHTML = "<br>x1 = "+x1+"<br>x2 = " + x2 + "<br>x3 = " + x3 + "<br>x4 = " + x4 + "<br>x5 = " + x5;
+      }
+      parseIntFun();
+
+      /*parseFloat() method*/
+      function parseFloatFun() {
+        var x = true;
+        var x1 = parseFloat(x);//returns NaN,
+        var y = false;
+        var x2 = parseFloat(y);//returns NaN
+        var str1 = "10";
+        var x3 = parseFloat(str1);//returns 10
+        var date = new Date();
+        var x4 = parseFloat(date);//NaN
+        var str2 = "10 Jimmy";
+        var x5 = parseFloat(str2);//returns NaN(not a number)
+
+        document.getElementById("demo8").innerHTML = "<br>x1 = "+x1+"<br>x2 = " + x2 + "<br>x3 = " +
+         x3 + "<br>x4 = " + x4 + "<br>x5 = " + x5 + "<br>maxNum = " + Number.MAX_VALUE + "<br>minNum = " + Number.MIN_VALUE;
+      }
+      parseFloatFun();
+
+
     </script>
   </body>
 </html>
