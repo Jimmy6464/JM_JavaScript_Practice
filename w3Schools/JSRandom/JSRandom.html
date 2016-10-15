@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>JSRandom</head>
+  <body>
+    <h1>JSRandom</h1>
+    <h2>>Math.random()</h2>
+    <p>Math.random() returns a random number between 0 (inclusive),  and 1 (exclusive):</p>
+    <p id="demo1"></p>
+    <script>
+    /*
+    Math.random()
+    1.Math.random() always returns a number lower than 1.
+    2.Math.random() used with Math.floor() can be used to return random integers.
+    */
+      function getRandNumBetweenMinAndMax(min,max) {
+        return Math.floor(Math.random() * (max - min) ) + min;//not incloud max and min,if you want it inclouded,"(max - min + 1) "
+      }
+      function mathRandomFun() {
+        var x1 = Math.floor(Math.random()*10);// returns a number between 0 and 9
+        var x2 = Math.floor(Math.random()*11);// returns a number between 0 and 10
+        var x3 = Math.floor(Math.random()*100);// returns a number between 0 and 99
+        var x4 = Math.floor(Math.random()*101);// returns a number between 0 and 100
+        var x5 = Math.floor(Math.random()*10 +1);// returns a number between 1 and 10
+        var x6 = Math.floor(Math.random()*100 + 1);//returns a number between 1 and 100
+        var x7 = getRandNumBetweenMinAndMax(12,89); //returns between min and max
+        document.getElementById("demo1").innerHTML = "<br>x1 = " + x1 + "<br>x2 = " + x2 +
+        "<br>x3 = " + x3 + "<br>x4 = " + x4 + "<br>x5 = " + x5 + "<br>x6 = " + x6 + "<br>x7 = " + x7
+      }
+      mathRandomFun();
+    </script>
+  </body>
+</html>
