@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>JavaScript Dates</h1>
+    <p>The Date object lets you work with dates (years, months, days, hours, minutes, seconds, and milliseconds)</p>
+
+    <h2>Displaying Dates</h2>
+    <p id="demo1"></p>
+
+    <h2>Creating Date Objects</h2>
+    <p id="demo2"></p>
+
+    <h2>Date Methods</h2>
+    <p id="demo3"></p>
+    <script>
+    function displayDatesFun(date) {
+      document.getElementById("demo1").innerHTML = date;
+    }
+    displayDatesFun(Date());
+    /*
+    Creating Date Objects
+    There are four ways of initiating date
+    No.1 new Date()
+    No.2 new Date(milliseconds)
+    No.3 new Date(dateString)
+    No.4 new Date(year,month,day,hours,minutes,seconds,milliseconds)
+    */
+
+
+    function createsDateObjFun() {
+      var date1 = new Date();//Using new Date(), creates a new date object with the current date and time:
+      var date2 = new Date("October 24, 1996 00:00:00");//Using new Date(date string), creates a new date object from the specified date and time:
+      //one day contains 886400000 milliseconds
+      var date3 = new Date(86400000);//Using new Date(number), creates a new date object as zero time plus the number.Zero time is 01 January 1970 00:00:00 UTC. The number is specified in milliseconds:
+      var date4 = new Date(99,5,24,11,22,34,0);//Using new Date(7 numbers), creates a new date object with the specified date and time:The 7 numbers specify the year, month, day, hour, minute, second, and millisecond, in
+      //Variants of the example above let us omit any of the last 4 parameters:
+      var date5 = new Date(99,0,12);//JavaScript counts months from 0 to 11. January is 0. December is 11.
+      document.getElementById("demo2").innerHTML = "<br>No.1 is " + date1 +
+      "<br>No.2 is " + date2 + "<br>No.3 is " + date3 + "<br>No.4 is  <br>" + date4 +
+      "<br> " + date5;
+    }
+    createsDateObjFun();
+    /*Date Nethods*/
+    function dateMethodsFun() {
+      //1.Display Dates
+      var date1 = new Date();
+      //toString()
+      var date2 = date1.toString();
+      //toUTCString()
+      var date3 = date1.toUTCString();
+      //toDateString(),converts a date to a more readable format:
+      var date4 = date1.toDateString();
+      document.getElementById("demo3").innerHTML = "<h3>Display dates</h3>" + "date1 : " +
+      date1 + " or " + date2 + "<br>UTC : " + date3 + "<br>toDateString() :"+ date4;
+    }
+    dateMethodsFun();
+    </script>
+  </body>
+</html>
