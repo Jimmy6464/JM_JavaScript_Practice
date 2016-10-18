@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<h1>JavaScript Date Formats</h1>
+	<p id = "demo1"></p>
+	<script>
+		function dateFormatsTypeFun(){
+			var date1 = new Date("2016-10-12");//ISO dates(complete date)
+			var date2 = new Date("2016-10");//ISO date (year and month)
+			var date3 = new Date("2016-10-12T12:00:00");//ISO date(complete date plus hours,minutes, and seconds)The T in the date string, between the date and time, indicates UTC time.
+			/*
+			js short dates
+			Month is written before day in all short date and ISO date formats.
+			*/
+			var date4 = new Date("12/10/2016");//Short dates are most often written with an "MM/DD/YYYY" syntax like this:
+			var date5 = new Date("2016/10/12");
+			document.getElementById("demo1").innerHTML = "<br> date1  = "+date1+"<br> date2 = " + date2+"<br> date3 = " + date3 + 
+			"<br> date4 = " + date4 + "<br> date5 = " + date5;
+		}
+		dateFormatsTypeFun();
+
+	</script>
+</body>
+</html>
