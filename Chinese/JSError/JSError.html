@@ -1,0 +1,48 @@
+<DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>JavaScript  错误 - Throw、Try 和 Catch </title>
+</head>
+<body>
+<h1>JavaScript  错误 - Throw、Try 和 Catch</h1>
+<script type="text/javascript">
+	var txt = "";
+	function myFun() {
+		// body...
+		try{
+			adddlert("Welcome guest");
+		}
+		catch(err){
+			 txt="本页有一个错误。\n\n";
+			  txt+="错误描述：" + err.message + "\n\n";
+			  txt+="点击确定继续。\n\n";
+			  alert(txt);
+		}
+	}
+	//
+	function myFunction()
+	{
+	try
+	{ 
+	var x=document.getElementById("demo").value;
+	if(x=="")    throw "值为空";
+	if(isNaN(x)) throw "不是数字";
+	if(x>10)     throw "太大";
+	if(x<5)      throw "太小";
+	}
+	catch(err)
+	{
+	var y=document.getElementById("mess");
+	y.innerHTML="错误：" + err + "。";
+	}
+	}
+</script>
+	<input type="button" value="查看消息" onclick="myFun()" />
+	<h1>我的第一个 JavaScript 程序</h1>
+	<p>请输入 5 到 10 之间的数字：</p>
+	<input id="demo" type="text">
+	<button type="button" onclick="myFunction()">测试输入值</button>
+	<p id="mess"></p>
+</body>
+</html>
