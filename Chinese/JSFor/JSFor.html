@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript For</title>
+</head>
+<body>
+<p id="demo1"></p>
+<p id="demo2"></p>
+<script type="text/javascript">
+	var cars = ["BMW","Volvo","Saab","Ford"];
+	for (var i = cars.length - 1; i >= 0; i--) {
+		document.write(cars[i] + "<br>"); 
+	}
+	function othersFun() {
+		// body...
+		var i=0,len=cars.length;
+		for (; i<len; )
+		{
+		document.write(cars[i] + " haha<br>");
+		i++;
+		}
+	}
+	function demo1Fun() {
+		// body...
+		var x = "";
+		for (var i = 0; i < 5; i++) {
+			x = x + "The number is " + i +"<br>";
+		}
+		document.getElementById('demo1').innerHTML = x;
+	}
+	
+	function forInFun() {
+		// body...
+		var x;
+		var txt = "";
+		var person = {fname:"Bill",lname:"Gates",age:48};
+		for (x  in person){
+			txt = txt + person[x];
+		}
+		return txt;
+	}
+	demo1Fun();
+	othersFun();
+
+	document.getElementById('demo2').innerHTML = forInFun();
+</script>
+</body>
+</html>

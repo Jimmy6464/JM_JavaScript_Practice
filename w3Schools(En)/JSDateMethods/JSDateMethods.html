@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript date methods</title>
+</head>
+<body>
+<h1>JavaScript date methods</h1>
+
+<h2>getTime() methods</h2>
+<p id="demo1"></p>
+
+<script type="text/javascript">
+	/*getTime()*/
+	function getTimeFun(date) {
+		// body...
+		return date.getTime();//returns 1476931068351
+	}
+	/*getFullYear()*/
+	function getFullYearFun(date) {
+		// body...
+		return date.getFullYear();//returns 2016
+	}
+	/*getDate()*/
+	function getDateFun(date) {
+		// body...
+		return date.getDate();//returns 1-31;
+	}
+	/*getHours()*/
+	function getHoursFun(date) {
+		// body...
+		return date.getHours();//Get the hour (0-23)
+	}
+	/*getDay()*/
+	function getDayFun(date) {
+		// body...
+		return date.getDay();//Get the weekday as a number (0-6),week(0) means sunday,the first day in a  week;
+	}
+	document.getElementById('demo1').innerHTML = "time is " + getTimeFun(new Date()) +"<br>year is" + getFullYearFun(new Date()) +
+	"<br>day is" + getDateFun(new Date())+"<br>week is" + getDayFun(new Date())+ "<br>Hour is" + getHoursFun(new Date()) ;
+	;
+</script>
+</body>
+</html>

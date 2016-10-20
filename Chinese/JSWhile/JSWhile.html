@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript While</title>
+</head>
+<body>
+<h1>JavaScript While method</h1>
+<p id="demo1"></p>
+<p id="demo2"></p>
+<script type="text/javascript">
+	/*while */
+	function whileFun() {
+		// body...
+		var x = "",i = 0;
+		while(i < 5){
+			x = x + "The number is " + i + "<br>";
+			i++;
+		}
+		return x;
+	}
+	document.getElementById('demo1').innerHTML = whileFun();
+	/* do while*/
+	function doWhileFun() {
+		// body...
+		var x = "", i = 0;
+		do{
+			x = x + "The number is " + i + "<br>";
+			i++;
+		}while(i < 5);
+		return x;
+	}
+	document.getElementById('demo2').innerHTML = doWhileFun();
+</script>
+</body>
+</html>
