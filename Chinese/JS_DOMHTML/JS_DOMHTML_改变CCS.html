@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript HTML DOM - 改变 HTML</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>JavaScript HTML DOM - 改变 HTML</h1>
+	<p id="demo1" style="color: red" >Hello World!</p>
+	<button onclick="changeHTMLStyleFun()">onclick</button>
+	<button onclick="showEleFun()">show</button>
+	<button onclick="hiddenEleFun()">hidden</button>
+	<script type="text/javascript">
+		function changeHTMLStyleFun() {
+			// body...
+			document.getElementById('demo1').style.color = "blue";
+		}
+		/*
+			hidden element
+		*/
+		function hiddenEleFun() {
+			// body...
+			document.getElementById('demo1').style.visibility = 'hidden';
+		}
+		function showEleFun() {
+			// body...
+			document.getElementById('demo1').style.visibility = 'visible';	
+		}
+	</script>
+</body>
+</html>

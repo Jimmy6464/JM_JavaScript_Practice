@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>JavaScript HTML DOM - 改变 HTML</title>
+</head>
+<body>
+<h1 id="title">JavaScript HTML DOM - 改变 HTML</h1>
+<p>改变 HTML 输出流</p>
+<p id="demo1"></p>
+<img src="shanghai_lupu_bridge.jpg" id="demo2">
+<input type="button" name="button" onclick="changeTheHTMLAttributeFun()" value="click to change">
+<script type="text/javascript">
+	/*
+		在 JavaScript 中，document.write() 可用于直接向 HTML 输出流写内容。
+		note:：绝不要使用在文档加载之后使用 document.write()。这会覆盖该文档。
+	*/
+	function wirteFun(date) {
+		// body...
+		document.write("<br>"+Date());
+	}
+	wirteFun();
+	/*
+		改变 HTML 内容
+		修改 HTML 内容的最简单的方法时使用 innerHTML 属性。
+
+	*/
+	function eidtHTMLContentFun(content) {
+		// body...
+		document.getElementById('demo1').innerHTML = content;
+	}
+	eidtHTMLContentFun("You are my only love");
+	function eidtHTMLContentFun2(element) {
+		// body...
+		var ele = document.getElementById(element);//returns element
+		ele.innerHTML = "JavaScript HTML DOM";//change this element's content
+	}
+	eidtHTMLContentFun2("title");
+
+	/*
+	改变 HTML 属性
+	语法：document.getElementById(id).attribute=new value
+	*/
+	function changeTheHTMLAttributeFun() {
+		// body...
+		document.getElementById('demo2').src = "eg_tulip.jpg";
+	}
+</script>
+</body>
+</html>

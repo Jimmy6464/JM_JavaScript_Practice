@@ -6,9 +6,11 @@
 <body>
 <h1>JavaScript date methods</h1>
 
-<h2>getTime() methods</h2>
+<h2>get methods</h2>
 <p id="demo1"></p>
 
+<h2>set methods</h2>
+<p id="demo2"></p>
 <script type="text/javascript">
 	/*getTime()*/
 	function getTimeFun(date) {
@@ -38,6 +40,62 @@
 	document.getElementById('demo1').innerHTML = "time is " + getTimeFun(new Date()) +"<br>year is" + getFullYearFun(new Date()) +
 	"<br>day is" + getDateFun(new Date())+"<br>week is" + getDayFun(new Date())+ "<br>Hour is" + getHoursFun(new Date()) ;
 	;
+
+	/*
+		Date setMethod
+	*/
+	//setFullYear
+	//setFullYear() sets a date object to a specific date. In this example, to January 14, 2020:
+	function setFullYearFun() {
+		// body...
+		var date = new Date();
+		date.setFullYear(2020,0,12);
+		return date;
+	}
+	//setDate() sets the day of the month (1-31):
+	function setDateFun() {
+		// body...
+		var d = new Date();
+		d.setDate(31);
+		return d;
+	}
+	//The setDate() method can also be used to add days to a date:
+	//If adding days, shifts the month or year, the changes are handled automatically by the Date object.
+	function addDateToDateFun(days) {
+		// body...
+		var d = new Date();
+		d.setDate(d.getDate()+days);
+		return d;
+	}
+	//Date Input - Parsing Dates
+	function parsingDateFun(dateStr) {
+		// body...
+		var msec = Date.parse(dateStr);// returns the number of milliseconds between the date and January 1, 1970:
+		//You can then use the number of milliseconds to convert it to a date object:
+
+		return new Date(msec);
+	}
+	//compare dates
+	function compareDateFun(currentDate,cmpDate) {
+		// body...
+		if (cmpDate > currentDate) {
+			return "Today is before "+ cmpDate;
+		}else{
+			return "Today is after "+ cmpDate;
+		}
+	}
+	function text() {
+		// body...
+		var date1 = new Date();
+		var date2 = setFullYearFun();
+		try{
+			document.getElementById('demo2').innerHTML = "<br>set setFullYear : " + setFullYearFun() + "<br>set setDate : " + setDateFun()  + "<br>addDateToDate : " + addDateToDateFun(4) + "<br>parsingDate : " + parsingDateFun("March 21, 2012")+ "<br>compare date result is : " + compareDateFun(date1,date2) ;
+		}catch(err){
+			document.write(err);
+		}
+	}
+	text();
 </script>
+
 </body>
 </html>
