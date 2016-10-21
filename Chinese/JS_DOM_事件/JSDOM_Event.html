@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript HTML DOM 事件</title>
+	<meta charset="utf-8">
+</head>
+<body onload="onloaddEvent()">
+	<h1>JavaScript HTML DOM 事件</h1>
+	<p>HTML DOM 使 JavaScript 有能力对 HTML 事件做出反应。</p>
+	<p onclick="exp1Fun(this)">请点击该文本</p>
+	<p>点击按钮就可以执行 <em>displayDate()</em> 函数。</p>
+	<button onclick="displayDate()">点击这里</button>
+	<button id="btn1">分配</button>
+	<p id="demo1"></p>
+	<p>提示框会告诉你，浏览器是否已启用 cookie。</p>
+	请输入英文字符：<input type="text" id="fname" onchange="onchangeFun()">
+	<p>当您离开输入字段时，会触发将输入文本转换为大写的函数。</p>
+
+	<div onmouseover="mOver(this)" onmouseout="mOut(this)" style="background-color:green;width:120px;height:20px;padding:40px;color:#ffffff;">把鼠标移到上面</div>
+	<script type="text/javascript">
+		/*
+			HTML 事件的例子：
+			当用户点击鼠标时
+			当网页已加载时
+			当图像已加载时
+			当鼠标移动到元素上时
+			当输入字段被改变时
+			当提交 HTML 表单时
+			当用户触发按键时
+		*/
+		function exp1Fun(id) {
+			// body...
+			id.innerHTML = "thank you";
+		}
+		//HTML 事件属性,如需向 HTML 元素分配 事件，您可以使用事件属性。
+		function displayDate() {
+			// body...
+			document.getElementById('demo1').innerHTML = new Date();
+		}
+		//使用 HTML DOM 来分配事件
+		function assignEvent(){
+			document.getElementById('btn1').onclick = function(){displayDate()};
+		}
+		assignEvent();
+
+		/*
+		onload 和 onunload 事件
+		onload 和 onunload 事件会在用户进入或离开页面时被触发。
+		onload 事件可用于检测访问者的浏览器类型和浏览器版本，并基于这些信息来加载网页的正确版本。
+		onload 和 onunload 事件可用于处理 cookie。
+		*/
+		//onload
+		function onloaddEvent(){
+			if (navigator.cookieEnabled==true) {
+				alert("已用cookied");
+			}else {
+				alert("未用cookied");
+			}
+		}
+		//onchange
+		function onchangeFun() {
+			// body...
+			var x = document.getElementById('fname');
+			x.value = x.value.toUpperCase();
+		}
+		function mOver(obj)
+{
+obj.innerHTML="谢谢"
+}
+
+function mOut(obj)
+{
+obj.innerHTML="把鼠标移到上面"
+}
+	</script>
+</body>
+</html>
