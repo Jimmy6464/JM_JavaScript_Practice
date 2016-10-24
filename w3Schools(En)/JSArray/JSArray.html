@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<title></title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>JavaScript Array</h1>
+	<p>show array</p>
+	<p id="demo1"></p>
+	<p id="demo2"></p>
+	<p id="demo3"></p>
+	<p id="demo4"></p>
+	<p id="demo5"></p>
+	<p id="demo6"></p>
+	<script type="text/javascript">
+		//WARNING !!
+		/*
+		If you use a named index, JavaScript will redefine the array to a standard object.
+		After that, all array methods and properties will produce incorrect results.
+		*/
+		function showArray(array) {
+			// body...
+			var txt = "";
+			for (var i = array.length - 1; i >= 0; i--) {
+				txt += array[i]+"<br>";
+			}
+			document.getElementById('demo1').innerHTML ="array is " + array +"<br>" + txt;
+		}
+		function showArrayAtIndex(array, index) {
+			// body...
+			var txt =  array[index];
+			document.getElementById('demo2').innerHTML = "The number " +index +" of array [" + array + " ] is " + txt;
+		}
+		//JavaScript uses names to access object properties.
+		function showArrayWithName(array,name) {
+			// body...
+			var txt =  array[name];
+			document.getElementById('demo3').innerHTML = "The name " +name +" of array [" + array + " ] is " + txt;
+		}
+		function addElementToArrayByPush(array,element) {
+			// body...
+			array.push(element);
+		}
+		function addElementToArrayAtIndex(array,index,ele) {
+			// body...
+			array[index] = ele;
+		}
+		function recognizeArray(array){
+			var txt = "";
+			if (Array.isArray(array)) {
+				txt = array + " is an array";
+			}else{
+				txt = array + " is not an array";
+			}
+			document.getElementById('demo4').innerHTML = txt;
+		}
+		function isArray(array) {
+			// body...
+			var result = array.constructor.toString().indexOf("Array") > -1;
+			document.getElementById('demo5').innerHTML = array +" is "+ result + " Array";
+		}
+		function instanceArray(array) {
+			// body...
+			var flag = array instanceof Array;
+			document.getElementById('demo6').innerHTML = array +" is "+ flag + " Array";
+		}
+		var array = ["One","two","three"];
+		var nameArray = {firstname:"Ng",secondName:"Jimmy",age:18};//as an object
+		showArray(array);
+		showArrayAtIndex(array,0);
+		showArrayWithName(nameArray,"secondName");
+		addElementToArrayByPush(array,"four");
+		addElementToArrayAtIndex(array,1,"Two");
+		addElementToArrayAtIndex(array,6,7);
+		showArray(array);
+		recognizeArray(array);
+		recognizeArray(nameArray);
+		isArray(array);
+		isArray(nameArray);
+		instanceArray(array);
+		instanceArray(nameArray);
+	</script>
+</body>
+</html>
