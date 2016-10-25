@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript HTML DOM 元素（节点）</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>JavaScript HTML DOM 元素（节点）</h1>
+	<div id="div1">
+		<p id="p1">这是一个段落</p>
+		<p id="p2">这是另一个段落</p>
+	</div>
+	<script type="text/javascript">
+		//创建新的 HTML 元素
+		//如需向 HTML DOM 添加新元素，您必须首先创建该元素（元素节点），然后向一个已存在的元素追加该元素。
+		function createElementFun() {
+			// body...
+			var para = document.createElement("p");
+			var node = document.createTextNode("这是新段落");
+			para.appendChild(node);
+			var element = document.getElementById('div1');
+			element.appendChild(para);
+		}
+		createElementFun();
+		/*
+		删除已有的 HTML 元素
+		如需删除 HTML 元素，您必须首先获得该元素的父元素：
+		*/
+		function deleteElement() {
+			// body...
+			var parent = document.getElementById("div1");
+			var child = document.getElementById('p1');
+			parent.removeChild(child);
+
+		}
+		function removeElementFun() {
+			// body...
+			var child = document.getElementById('p2');
+			child.parentNode.removeChild(child);
+		}
+		deleteElement();
+		removeElementFun();
+	</script>
+</body>
+</html>
