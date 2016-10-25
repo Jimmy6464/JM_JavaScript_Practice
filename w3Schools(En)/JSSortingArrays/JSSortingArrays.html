@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript Sorting Arrays</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>JavaScript Sorting Arrays</h1>
+	<p id="demo1"></p>
+	<p id="demo2"></p>
+	<script type="text/javascript">
+		//The sort() method sorts an array alphabetically(按字母顺序排)
+		var fruits = ["Banana", "Orange", "Apple", "Mango"];
+		function sortArray(array) {
+			// body...
+			document.getElementById('demo1').innerHTML = "original arrya is "+ array +"<br>After sorting is "+array.sort() + "<br>org:"+array;//改变内部结构
+		}
+		function reverseArray(array) {
+			
+			document.getElementById('demo2').innerHTML = "original arrya is "+ array +"<br>After reversing is " +  array.reverse();//改变内部结构，数组已经改变
+		}
+		sortArray(fruits);
+		reverseArray(fruits);
+	</script>
+</body>
+</html>

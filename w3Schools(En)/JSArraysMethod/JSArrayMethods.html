@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript Array Methods</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>JavaScript Array Methods</h1>
+	<p id="demo1"></p>
+	<p id="demo2"></p>
+	<p id="demo3"></p>
+	<p id="demo4"></p>
+	<p id="demo5"></p>
+	<p id="demo6"></p>
+	<p id="demo7"></p>
+	<p id="demo8"></p>
+	<script type="text/javascript">
+		//toString()
+		function toStringMethod(array) {
+			// body...
+			document.getElementById('demo1').innerHTML = array.toString();
+		}
+		//join(str)
+		/*
+		The join() method also joins all array elements into a string.
+
+		It behaves just like toString(), but in addition you can specify the separator:
+		*/
+		function joinMethod(array, str) {
+			// body...
+			document.getElementById('demo2').innerHTML = array.join(str);
+		}
+
+		/*
+		poping and pushing
+		The pop() method removes the last element from an array:
+		*/
+		function popMethod(array) {
+			// body...
+			var tmp = [];
+			var str = "";
+			for (var i = 0; i < array.length; i++) {
+				str =str + "," + tmp.push(array[i]);// the value of x is 1,2,3,4
+
+			}
+			var x = tmp.pop();//the value of x is "Mango"
+			document.getElementById('demo3').innerHTML = "Original array is " + array + "<br>After popping is " + tmp + " .popped element is " + x + "<br>push indexstr is " + str;
+		}
+		/*
+		Shifting and unshifting
+		The shift() method returns the string that was "shifted out".
+
+		The unshift() method returns the new array length.
+		*/
+		function shiftingMethod(array) {
+			// body...
+			// body...
+			var tmp = [];
+			var str = "";
+			for (var i = 0; i < array.length; i++) {
+				str =str + "," + tmp.unshift(array[i]);// the value of x is 1,2,3,4
+
+			}
+			var x = tmp.shift();//the value of x is "Mango"
+			document.getElementById('demo4').innerHTML = "Original array is " + array + "<br>After Shifting is " + tmp + " .shifted  element is " + x + "<br>unshifting indexstr is " + str;
+		}
+		//changing elements
+		function changeArrayAtIndex(array,index,str) {
+			// body...
+			array[index] = str;
+		}
+		//delete elelments
+		function deleteArray(array,index) {
+			// body...
+			delete array[index];//Changes the index element in array to undefined
+		}
+		//The splice() method can be used to add new items to an array:
+		function spliceArray(array,addIndex,removeIndexs,addStr) {
+			// body...
+			array.splice(addIndex,removeIndexs,addStr,addStr);//添加元素，addIndex:添加的位置，removeIndexs:添加位置往后的移除的位数
+		}
+		//Using splice() to Remove Elements
+		function spliceToDelete(array,index,removes) {
+			// body...
+			array.splice(index,removes);
+		}
+		//Joining arrays
+		//The concat() method creates a new array by concatenating two arrays:
+		function concatTowArrays(array,otherArray) {
+			// body...
+			var newArray = array.concat(otherArray);//The concat() method can take any number of array arguments:such as "array.concat(otherArray,otherArray)"
+			document.getElementById('demo5').innerHTML = newArray;
+		}
+		//Slicing an Array
+		//The slice() method slices out a piece of an array into a new array.
+		//This example slices out a part of an array starting from array element 1 ("Orange"):
+		//The slice() method creates a new array. It does not remove any elements from the source array.
+		function sliceArray(array,index) {
+			// body...
+			var newArray = array.slice(index);
+			document.getElementById('demo6').innerHTML = newArray;
+		}
+		function sliceArrayWithTwoArguments(array,index,length) {
+			// body...
+			document.getElementById('demo7').innerHTML = array.slice(index,length);
+		}
+
+		//valueOf() 
+		//All JavaScript objects have a valueOf() and a toString() method.
+		function valueOfArrya(array) {
+			// body...
+			document.getElementById('demo8').innerHTML = array.valueOf();
+		}
+		var fruits = ["Banana", "Orange", "Apple", "Mango"];
+		toStringMethod(fruits);
+		joinMethod(fruits,"==");
+		popMethod(fruits);
+		shiftingMethod(fruits);
+		changeArrayAtIndex(fruits,fruits.length,"purple");
+		deleteArray(fruits,1);//
+		spliceArray(fruits,1,1,"lemon");
+		spliceToDelete(fruits,0,2);//移除前两个元素
+		toStringMethod(fruits);
+
+		var sports = ["swim","runing","basketball"];
+		concatTowArrays(fruits,sports);
+		sliceArray(sports,1);
+		sliceArrayWithTwoArguments(fruits,1,3);//output an array frome index 1 to index (3-1) = 2
+		valueOfArrya(fruits);
+	</script>
+</body>
+</html>
