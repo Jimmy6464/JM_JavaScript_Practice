@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript Regular Expressions</title>
+
+</head>
+<body>
+	<h1>JavaScript Regular Expressions</h1>
+	<p>Search a string for "w3Schools", and display the position of the match:</p>
+	<button onclick="searchStr()">Try it</button>
+	<p id="demo1"></p>
+	<button onclick="searchString()">Try it</button>
+	<p id="demo2"></p>
+
+	<button onclick="replaceMehtod()">Replace it</button>
+	<p id="demo3"></p>
+
+	<button onclick="textMethod()">text it</button>
+	<p id="p01">The best things in life are free!</p>
+	<p id="demo4"></p>
+
+	<button onclick="execString()">exec it</button>
+	<p id="demo5"></p>
+	<script type="text/javascript">
+		//search string
+		function searchStr() {
+			var str = "Visit W3School";
+			var n = str.search(/W3School/i);//i:Perform case-insensitive matching
+			document.getElementById('demo1').innerHTML = n;
+		}
+		function  searchString() {
+			var str = "Visit w3Schools";
+			var n = str.search("Visit");
+			document.getElementById('demo2').innerHTML = n;
+		}
+
+		//replace 
+		function replaceMehtod() {
+			var string = "Hello, Jimmy";
+			var txt = string.replace(/m/g,"n");//g :Perform a global match (find all matches rather than stopping after the first match)
+			document.getElementById('demo3').innerHTML = txt;
+		}
+		//test
+		function textMethod() {
+			// body...
+			var patt = /e/;
+			var text = document.getElementById('p01').innerHTML;
+			var flag = patt.test(text);
+			if (flag) {
+				document.getElementById('demo4').innerHTML = "you are right,it has 'e'";
+			}else{
+				document.getElementById('demo4').innerHTML = "you are wrong,it has not 'e'";
+			}
+		}
+		//exec() 
+		function execString() {
+			var patt = /e/;
+			var text = document.getElementById('p01').innerHTML;
+			var execText = patt.exec(text);
+			if (Boolean(execText)) {
+				document.getElementById('demo5').innerHTML = execText;
+			}else{
+				document.getElementById('demo5').innerHTML = "nothing";
+			}
+		}
+	</script>
+</body>
+</html>
