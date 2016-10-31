@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript Form</title>
+</head>
+<body>
+	<h1>JavaScript Form</h1>
+	<form name="myForm" action="" onsubmit="return validateForm()" method="post"> 
+	Name:<input type="text" name="fname"><input type="submit" name="submit">
+	</form>
+
+	<h1>JavaScript can validate input</h1>
+	<p>Please input a number between 1 and 10:</p>
+	<input type="text" id="numb">
+	<button type="button" onclick="validateNumeric()">Submit</button>
+	<p id="demo2"></p>
+
+	<form action="action" method="post">
+		<input type="text" name="fname" required>
+		<!-- If a form field (fname) is empty, the required attribute prevents this form from being submitted: -->
+		<!-- Automatic HTML form validation does not work in Internet Explorer 9 or earlier. -->
+		<input type="submit" value="sumit">
+	</form>
+	<script type="text/javascript">
+		function validateForm() {
+			var x = document.forms["myForm"]["fname"].value;
+			if (x == null || x == "") {
+				alert("Name must be filled out");
+				return false;
+			}
+		}
+
+		function validateNumeric() {
+			var x,text;
+			x = document.getElementById('numb').value;
+
+			if (isNaN(x) || x<1||x>10) {
+				text = "input not valid";
+			}else{
+				text = "input ok";
+			}
+			document.getElementById('demo2').innerHTML = text;
+		}
+
+		function autoValidate() {
+			// body...
+		}
+	</script>
+</body>
+</html>
