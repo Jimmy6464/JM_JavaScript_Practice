@@ -263,8 +263,31 @@
 			function fn() {
 				return "Hello world";
 			}
-			console.log(`foo ${fn()} bar`);
-			
+			console.log(`foo ${fn()} bar`);//// foo Hello World bar
+			//模板字符串甚至还能嵌套。
+			const tmpl = addrs => `
+			  <table>
+			  ${addrs.map(addr => `
+			    <tr><td>${addr.first}</td></tr>
+			    <tr><td>${addr.last}</td></tr>
+			  `).join('')}
+			  </table>
+			`;
+			const data = [
+			    { first: '<Jane>', last: 'Bond' },
+			    { first: 'Lars', last: '<Croft>' },
+			];
+
+			console.log(tmpl(data));
+			//如果需要引用模板字符串本身，在需要时执行，可以像下面这样写
+			// 写法一
+			let str = 'return '+'`Hello ${name}!`';
+			let func = new Function('name',str);
+			console.log(func('Jack'));
+			// 写法二
+			let st = '(name) => `Hello ${name}!`';
+			let func2 = eval.call(null,st);
+			console.log(func2('Jimmt'));
 		}
 		fun9();
 	</script>
