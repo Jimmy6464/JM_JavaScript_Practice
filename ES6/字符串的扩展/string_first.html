@@ -11,6 +11,8 @@
 	<p id="demo3"></p>
 	<p id="demo4"></p>
 	<p id="demo5"></p>
+	<p id="demo6"></p>
+	<p id="demo7"></p>
 	<script type="text/javascript">
 		//1. 字符的Unicode表示法
 		function unicodeShow() {
@@ -154,7 +156,117 @@
 			str1.includes('hello', 6) // false 第6个开始
 			//上面代码表示，使用第二个参数n时，endsWith的行为与其他两个方法有所不同。它针对前n个字符，而其他两个方法针对从第n个位置直到字符串结束。
 		}
-		
+		/*repeat(n)  方法返回一个新字符串，表示将原字符串重复n次。*/
+		function fun7() {
+			var str1 = 'x'.repeat(2);//'xx'
+			var str2 = 'jimmy'.repeat(4);//'jimmyjimmyjimmyjimmy'
+			var str3 = 'na'.repeat(0);//''
+
+			//参数如果是小数，会被取整。
+			var str4 = 'ka'.repeat(2.9);//'kaka'
+			//如果repeat的参数是负数或者Infinity，会报错。
+			//但是，如果参数是0到-1之间的小数，则等同于0，这是因为会先进行取整运算。0到-1之间的小数，取整以后等于-0，repeat视同为0。
+			//如果repeat的参数是字符串，则会先转换成数字。
+			var str5 = 'kl'.repeat('kl');
+			document.getElementById('demo5').innerHTML = "<br>str1 : "+str1 + " str2 : " + str2 + " str3 : " + str3 +" str4 : " + str4 +" str5 : " + str5;
+		}
+		fun7();
+		/*
+		padStart()，padEnd() 
+		ES7推出了字符串补全长度的功能。如果某个字符串不够指定长度，会在头部或尾部补全。padStart用于头部补全，padEnd用于尾部补全。
+		*/
+		function fun8() {
+			'x'.padStart(5,'ab');//'ababx'
+			'x'.padStart(4,'ab');//'abax'
+
+			'x'.padEnd(5,'ab');//'xabab'
+			'x'.padEnd(4,'ab');//"xaba"
+			//第一个参数用来指定字符串的最小长度，第二个参数是用来补全的字符串。
+			//如果原字符串的长度，等于或大于指定的最小长度，则返回原字符串
+			'xxx'.padStart(2, 'ab') // 'xxx'
+			'xxx'.padEnd(2, 'ab') // 'xxx'
+			//如果省略第二个参数，则会用空格补全长度。
+			'x'.padStart(4);//'    x'
+			'x'.padEnd(4);//'x    '
+			// padStart的常见用途是为数值补全指定位数。下面代码生成10位的数值字符串。
+			'1'.padStart(10, '0') // "0000000001"
+			'12'.padStart(10, '0') // "0000000012"
+			'123456'.padStart(10, '0') // "0000123456"
+			// 另一个用途是提示字符串格式。
+			'12'.padStart(10, 'YYYY-MM-DD') // "YYYY-MM-12"
+			'09-12'.padStart(10, 'YYYY-MM-DD') // "YYYY-09-12"
+		}
+
+		/*
+		模板字符串
+		模板字符串（template string）是增强版的字符串，用反引号（`）标识。它可以当作普通字符串使用，也可以用来定义多行字符串，或者在字符串中嵌入变量。
+		 */
+		function fun9() {
+			// 普通字符串
+			var str1 = `In JavaScript '\n' is a line-feed.`
+
+			// 多行字符串
+			var str2 = `In JavaScript this is
+			 not legal.`
+			 document.getElementById('demo6').innerHTML = "<br>str1 :"+str1+"<br>str2: "+str2;
+			 console.log(`string text line 1
+			string text line 2`);
+
+			 //字符串中嵌入变量
+			 var name = "Bob",time = "today";
+			 console.log(`Hello ${name}, how are you ${time}?`);
+			 //上面代码中的模板字符串，都是用反引号表示。如果在模板字符串中需要使用反引号，则前面要用反斜杠转义。
+			 var greeting = `\`${name}\` wrold!`;
+			 console.log(greeting);
+
+			 //如果使用模板字符串表示多行字符串，所有的空格和缩进都会被保留在输出之中。可以使用trim方法消除它
+			 /*
+				$('#list').html(`
+				<ul>
+				  <li>first</li>
+				  <li>second</li>
+				</ul>
+				`.trim());
+			 */
+			 var user = {firstname:'jimmy',eating:function() {
+			 	// body...
+			 	console.log(`${this.firstname}'s  eating`);
+			 }};
+			function authorize(user,action) {
+				if (!user.hasPrivilege(action)) {
+					 throw new Error(
+					 // 传统写法为
+					 // 'User '
+					 // + user.name
+					 // + ' is not authorized to do '
+					 // + action
+					 // + '.'
+					 `User ${user.name} is not authorized to do ${action}.`);
+				}else{
+					user.action;
+				}
+			}
+			user.eating();
+			// authorize(user,user.eating());
+			var x = 1;
+			var y = 2;
+
+			`${x} + ${y} = ${x + y}`;
+			// "1 + 2 = 3"
+
+			`${x} + ${y * 2} = ${x + y * 2}`;
+			// "1 + 4 = 5"
+
+			var obj = {x: 1, y: 2};
+			`${obj.x + obj.y}`;//3
+			//模板字符串之中还能调用函数。
+			function fn() {
+				return "Hello world";
+			}
+			console.log(`foo ${fn()} bar`);
+			
+		}
+		fun9();
 	</script>
 </body>
 </html>
