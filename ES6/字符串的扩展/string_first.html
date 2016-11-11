@@ -3,6 +3,7 @@
 <head>
 	<title>字符串的扩展</title>
 	<meta charset="utf-8">
+	<script type="text/javascript" scr= "/Users/jimmy/Desktop/JavaScript/ES6/字符串的扩展/node_modules/string.prototype.at/at.js"></script>
 </head>
 <body>
 	<h1>字符串的扩展</h1>
@@ -13,7 +14,10 @@
 	<p id="demo5"></p>
 	<p id="demo6"></p>
 	<p id="demo7"></p>
+	<div id="div"></div>
+	<div id="div2"></div>
 	<script type="text/javascript">
+		// require('string.prototype.at');
 		//1. 字符的Unicode表示法
 		function unicodeShow() {
 			//JavaScript允许采用\uxxxx形式表示一个字符，其中“xxxx”表示字符的码点。但是，这种表示法只限于\u0000——\uFFFF之间的字符。超出这个范围的字符，必须用两个双字节的形式表达。
@@ -110,6 +114,7 @@
 			document.getElementById('demo4').innerHTML = str1 + str2;
 			document
 		}
+		// fun4();
 		/*normalize()*/
 		function fun5() {
 			/*
@@ -283,13 +288,150 @@
 			// 写法一
 			let str = 'return '+'`Hello ${name}!`';
 			let func = new Function('name',str);
-			console.log(func('Jack'));
+			console.log(func('Jack'));//Hello Jack!
 			// 写法二
 			let st = '(name) => `Hello ${name}!`';
 			let func2 = eval.call(null,st);
-			console.log(func2('Jimmt'));
+			console.log(func2('Jimmt'));//Hello Jimmt!
 		}
 		fun9();
+		/*实例：模板编译 */
+		function fun10() {
+			var template = `
+			<ul>
+			  <% for(var i=0; i < data.supplies.length; i++) { %>
+			    <li><%= data.supplies[i] %></li>
+			  <% } %>
+			</ul>
+			`;
+			function compile(template){
+			  var evalExpr = /<%=(.+?)%>/g;
+			  var expr = /<%([\s\S]+?)%>/g;
+
+			  template = template
+			    .replace(evalExpr, '`); \n  echo( $1 ); \n  echo(`')
+			    .replace(expr, '`); \n $1 \n  echo(`');
+
+			  template = 'echo(`' + template + '`);';
+
+			  var script =
+			  `(function parse(data){
+			    var output = "";
+
+			    function echo(html){
+			      output += html;
+			    }
+
+			    ${ template }
+
+			    return output;
+			  })`;
+
+			  return script;
+			}
+			var parse = eval(compile(template));
+			var div = document.getElementById('div');
+			div.innerHTML = parse({ supplies: [ "broom", "mop", "cleaner" ] });
+		}
+		fun10();
+		/*
+		标签模板
+		模板字符串的功能，不仅仅是上面这些。它可以紧跟在一个函数名后面，该函数将被调用来处理这个模板字符串。这被称为“标签模板”功能（tagged template）。
+		*/
+		function fun11() {
+			alert`123`;
+			//the same as 
+			alert(455);
+			var a = 5;
+			var b = 10;
+			function tag(s, ...v1) {//...v1 表示多个参数
+			  console.log(s[0]);
+			  console.log(s[1]);
+			  console.log(s[2]);
+			  console.log(v1[0]);
+			  console.log(v1[1]);
+
+			  return "OK";
+			}
+
+			console.log(tag`Hello ${ a + b } world ${ a * b}jimmy`);
+
+			//exp2 
+			var total = 30;
+			var msg = passthru`The total is ${total} (${total*1.05} with tax)`;
+			function passthru(literals) {
+				var result = '';
+				var i = 0;
+				while(i < literals.length){
+					result += literals[i++];
+					if (i<arguments.length) {
+						result += arguments[i];
+
+					}
+					console.log(result);
+				}
+				return result;
+			}
+			//the same as following
+			function passthru1(literals,...values) {
+				var output ='';
+				for (var i = 0; i < values.length; i++) {
+					output += literals[i] + values[i];
+				}
+				output += literals[i];
+				return output;
+			}
+			console.log(msg);
+			/*
+			log output:
+
+			 The total is 30
+			 The total is 30 (31.5
+			 The total is 30 (31.5 with tax)
+			 The total is 30 (31.5 with tax)
+
+			 上面这个例子展示了，如何将各个参数按照原来的位置拼合回去。
+			*/
+
+			/*
+			“标签模板”的一个重要应用，就是过滤HTML字符串，防止用户输入恶意内容。
+			*/
+			var sender = '<script>alert("abc")<\/script>';//恶意代码
+			var message = SaferHTML `<p>${sender} has sent you a message.</p>`;
+			function SaferHTML(templateData) {
+				var s = templateData[0];
+				for (var i = 0; i < arguments.length; i++) {
+					var arg = String(arguments[i]);
+					// Escape special characters in the substitution.
+					s += arg.replace(/&/g,"&amp;")
+							.replace(/</g,"&lt;")
+							.replace(/>/g,"&gt;");
+
+					// Don't escape special characters in the template.
+				    s += templateData[i];
+				}
+				return s;
+			}
+			document.getElementById('div2').innerHTML = message;
+			//多语言转换（国际化处理）。
+			/*
+
+			var mes = i18n`Welcome to ${siteName}, you are visitor number ${visitorNumber}!`
+			document.getElementById('demo7').innerHTML = mes;
+			*/
+			java`
+			class HelloWorldApp {
+			  public static void main(String[] args) {
+			    System.out.println(“Hello World!”); // Display the string.
+			  }
+			}
+			`
+			function java(argument,values) {
+				// body...
+			}
+			HelloWorldApp.main();
+		}
+		fun11();
 	</script>
 </body>
 </html>
