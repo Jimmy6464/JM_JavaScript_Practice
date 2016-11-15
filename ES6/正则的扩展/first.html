@@ -81,11 +81,192 @@
 
 			//（5）i修饰符
 			//有些Unicode字符的编码不同，但是字型很相近，比如，\u004B与\u212A都是大写的K。
-			/[a-z]/i.test('\u212A') // false
-			/[a-z]/iu.test('\u212A') // true
+			/[a-z]/i.test('\u212A'); // false
+			/[a-z]/iu.test('\u212A'); // true
 			//上面代码中，不加u修饰符，就无法识别非规范的K字符。
+
 		}
 		fun2();
+
+		/*
+		y修饰符 
+		叫做“粘连”（sticky）修饰符。
+
+		y修饰符的作用与g修饰符类似，也是全局匹配，后一次匹配都从上一次匹配成功的下一个位置开始。不同之处在于，g修饰符只要剩余位置中存在匹配就可，而y修饰符确保匹配必须从剩余的第一个位置开始，这也就是“粘连”的涵义。
+		*/
+		function fun3() {
+			var s = 'aaa_aa_a';
+			var reg1 = /a+/g;
+			var reg2 = /a+/y;
+
+			console.log(reg1.exec(s));// ["aaa", index: 0, input: "aaa_aa_a"]
+			console.log(reg2.exec(s));//["aaa", index: 0, input: "aaa_aa_a"]
+
+			console.log(reg1.exec(s));// ["aa", index: 4, input: "aaa_aa_a"]
+			console.log(reg2.exec(s));//null,need to change the reg2 to '/a+_/y'
+
+			//使用lastIndex
+			const REGEX = /a/g;
+
+			//指定从2号位置（y）开始匹配
+			REGEX.lastIndex = 2;
+
+			//匹配成功
+			const match = REGEX.exec('xaya');
+
+			//在3号位置匹配成功
+			console.log(match.index);//3
+
+			//下一次匹配从4号位开始
+			console.log('lastIndex :' + REGEX.lastIndex );
+
+			//4号位开始匹配失败
+			REGEX.exec('xaya');
+
+			/b/y.exec('aba')// null
+			//上面代码由于不能保证头部匹配，所以返回null。y修饰符的设计本意，就是让头部匹配的标志^在全局匹配中都有效。
+			// 没有找到匹配
+			'x##'.split(/#/y);
+			// [ 'x##' ]
+
+			// 找到两个匹配
+			var txt = '##x#'.split(/#/y);
+			// [ '', '', 'x#' ]
+			console.log(txt);
+
+			const REGEX1 = /a/gy;
+			var txt2 = 'aaxa'.replace(REGEX1, '-') // '--xa'
+			console.log(txt2);
+			//上面代码中，最后一个a因为不是出现下一次匹配的头部，所以不会被替换。
+			'a1a2a3'.match(/a\d/y) // ["a1"]
+			'a1a2a3'.match(/a\d/gy) // ["a1", "a2", "a3"]
+			//单单一个y修饰符对match方法，只能返回第一个匹配，必须与g修饰符联用，才能返回所有匹配。
+
+			const TOKEN_Y = /\s*(\+|[0-9]+)\s*/y;
+			const TOKEN_G = /\s*(\+|[0-9]+)\s*/g;
+			tokenize(TOKEN_Y, '3 + 4')
+			// [ '3', '+', '4' ]
+			tokenize(TOKEN_G, '3 + 4')
+			// [ '3', '+', '4' ]
+
+			function tokenize(TOKEN_REGEX, str) {
+			  let result = [];
+			  let match;
+			  while (match = TOKEN_REGEX.exec(str)) {
+			    result.push(match[1]);
+			  }
+			  return result;
+			}
+
+			tokenize(TOKEN_Y, '3x + 4')
+			// [ '3' ]
+			tokenize(TOKEN_G, '3x + 4')
+			// [ '3', '+', '4' ]
+
+			//上面代码中，g修饰符会忽略非法字符，而y修饰符不会，这样就很容易发现错误
+		}
+		fun3();
+
+		/*sticky属性 表示是否设置了y修饰符。*/
+		/*flags属性 会返回正则表达式的修饰符。*/
+		function fun4() {
+			var r =  /hello\d/y;
+			console.log(r.sticky);
+
+			// ES5的source属性
+			// 返回正则表达式的正文
+			/abc/ig.source
+			// "abc"
+
+			// ES6的flags属性
+			// 返回正则表达式的修饰符
+			/abc/ig.flags
+			// 'gi'
+		}
+		fun4();
+
+		/*
+		RegExp.escape() 
+		*/
+		function fun5() {
+			function escapeRegExp(str) {
+			  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+			}
+
+			let str = '/path/to/resource.html?search=query';
+			escapeRegExp(str)
+			// "\/path\/to\/resource\.html\?search=query"
+
+			RegExp.escape('The Quick Brown Fox');
+			// "The Quick Brown Fox"
+
+			RegExp.escape('Buy it. use it. break it. fix it.');
+			// "Buy it\. use it\. break it\. fix it\."
+
+			RegExp.escape('(*.*)');
+			// "\(\*\.\*\)"
+
+			//字符串转义以后，可以使用RegExp构造函数生成正则模式。
+			var str = 'hello. how are you?';
+			var regex = new RegExp(RegExp.escape(str), 'g');
+			assert.equal(String(regex), '/hello\. how are you\?/g');
+
+		}
+		//后行断言 
+		function fun6() {
+			//先行断言
+			/\d+(?=%)/.exec('100% of US presidents have been male');  // ["100"]
+			/\d+(?!%)/.exec('that’s all 44 of them');                 // ["44"]
+			//上面两个字符串，如果互换正则表达式，就会匹配失败。另外，还可以看到，”先行断言“括号之中的部分（(?=%)），是不计入返回结果的。
+
+			/(?<=\$)\d+/.exec('Benjamin Franklin is on the $100 bill');  // ["100"]
+			/(?<!\$)\d+/.exec('it’s is worth about €90');                // ["90"]
+
+			/(?<=(\d+)(\d+))$/.exec('1053'); // ["", "1", "053"]
+			/^(\d+)(\d+)$/.exec('1053'); // ["1053", "105", "3"]
+			//上面代码中，需要捕捉两个组匹配。没有"后行断言"时，第一个括号是贪婪模式，第二个括号只能捕获一个字符，所以结果是105和3。而"后行断言"时，由于执行顺序是从右到左，第二个括号是贪婪模式，第一个括号只能捕获一个字符，所以结果是1和053。
+
+			/(?<=(o)d\1)r/.exec('hodor');  // null
+			/(?<=\1d(o))r/.exec('hodor');  // ["r", "o"]
+			//上面代码中，如果后行断言的反斜杠引用（\1）放在括号的后面，就不会得到匹配结果，必须放在前面才可以。
+		}
+
+		/*Unicode属性类 */
+		function fun7() {
+			const regexGreekSymbol =  /\p{Script=Greek}/u;
+			regexGreekSymbol.test('π'); // u
+			//上面代码中，\p{Script=Greek}指定匹配一个希腊文字母，所以匹配π成功。
+			// Unicode属性类要指定属性名和属性值
+
+			/*
+				\p{UnicodePropertyName=UnicodePropertyValue}
+				对于某些属性，可以只写属性名。
+				\p{UnicodePropertyName}
+
+				\P{…}是\p{…}的反向匹配，即匹配不满足条件的字符。
+
+				两种类只对Unicode有效，所以使用的时候一定要加上u修饰符。如果不加u修饰符，正则表达式使用\p和\P会报错，ECMAScript预留了这两个类
+			*/
+
+			const regex = /^\p{Decimal_Number}+$/u;
+			regex.test('𝟏𝟐𝟑𝟜𝟝𝟞𝟩𝟪𝟫𝟬𝟭𝟮𝟯𝟺𝟻𝟼') ;// true
+
+			// 匹配所有数字
+			const regex = /^\p{Number}+$/u;
+			regex.test('²³¹¼½¾'); // true
+			regex.test('㉛㉜㉝'); // true
+			regex.test('ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅪⅫ'); // true
+
+			// 匹配各种文字的所有字母，等同于Unicode版的\w
+			// var r1 = [\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}];
+
+			// // 匹配各种文字的所有非字母的字符，等同于Unicode版的\W
+			// [\p{Alphabetic}\p{Mark}\p{Decimal_Number}\p{Connector_Punctuation}\p{Join_Control}];
+
+			// 匹配所有的箭头字符
+			const regexArrows = /^\p{Block=Arrows}+$/u;
+			regexArrows.test('←↑→↓↔↕↖↗↘↙⇏⇐⇑⇒⇓⇔⇕⇖⇗⇘⇙⇧⇩'); // true
+		}
 	</script>
 </body>
 </html>
