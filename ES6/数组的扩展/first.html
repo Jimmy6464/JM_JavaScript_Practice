@@ -8,6 +8,7 @@
 	<p>1,Array.from()</p>
 	<p><span>2,Array.from()</span></p>
 	<script type="text/javascript">
+	"use strict"
 		//1.Array.from() 
 		//Array.from方法用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括ES6新增的数据结构Set和Map）。
 		// 只要是部署了Iterator接口的数据结构，Array.from都能将其转为数组。
@@ -173,13 +174,15 @@
 			// 上面代码中，find方法的回调函数可以接受三个参数，依次为当前的值、当前的位置和原数组。
 
 			// 数组实例的findIndex方法的用法与find方法非常类似，返回第一个符合条件的数组成员的位置，如果所有成员都不符合条件，则返回-1。
-			[1, 5, 10, 15].findIndex(function(value, index, arr) {
+			var array = [1, 5, 10, 15];
+			console.log(array.findIndex(function(value, index, arr) {
 			  return value > 9;
-			}) // 2
+			})); // 2
 
 			//这两个方法都可以接受第二个参数，用来绑定回调函数的this对象。
 			// 另外，这两个方法都可以发现NaN，弥补了数组的IndexOf方法的不足。
-			[NaN].indexOf(NaN)
+			var arr = [NaN,1,2];
+			console.log('index:'+arr.indexOf(NaN));
 			// -1
 
 			[NaN].findIndex(y => Object.is(NaN, y))
@@ -187,6 +190,134 @@
 			//上面代码中，indexOf方法无法识别数组的NaN成员，但是findIndex方法可以借助Object.is方法做到。
 		}
 		fun4();
+		/*
+		数组实例的fill()
+		fill方法使用给定值，填充一个数组
+		*/
+		function fun5 () {
+			var arr1 = ['a','b','c'].fill(7);
+			console.log(arr1);//[7, 7, 7]
+			//fill方法还可以接受第二个和第三个参数，用于指定填充的起始位置和结束位置
+			console.log(arr1.fill(3,1,3));//[7, 3, 3]
+			//上面代码表示，fill方法从1号位开始，向原数组填充7，到2号位之前结束
+		}
+		fun5();
+
+		/*
+
+		数组实例的entries()，keys()和values()
+		ES6提供三个新的方法——entries()，keys()和values()——用于遍历数组。它们都返回一个遍历器对象（详见《Iterator》一章），可以用for...of循环进行遍历，唯一的区别是
+		keys()是对键名的遍历、
+		values()是对键值的遍历，
+		entries()是对键值对的遍历。
+		*/
+		function fun6 () {
+			var array = ['a','b'];
+			console.log("keys:");
+			for(let index of array.keys()){
+				console.log(index);
+			}//0,1
+
+			console.log("values:");
+			console.log(array);
+			/*
+			for (let elem of ['a', 'b'].values()) {
+			  console.log(elem);
+			}
+			*/
+			console.log("entries,including keys and values:");
+			for(let [index,elem] of array.entries()){
+				console.log(index,elem);
+			}
+			//0 "a",1 "b"
+			//如果不使用for...of循环，可以手动调用遍历器对象的next方法，进行遍历。
+			let letter = ['a', 'b', 'c'];
+			let entries = letter.entries();
+			console.log(entries.next().value); // [0, 'a']
+			console.log(entries.next().value); // [1, 'b']
+			console.log(entries.next().value); // [2, 'c']
+		}
+		fun6();
+
+		/*
+		数组实例的includes()
+		Array.prototype.includes方法返回一个布尔值，表示某个数组是否包含给定的值，与字符串的includes方法类似。该方法属于ES7，但Babel转码器已经支持
+		*/
+		function fun7 () {
+			var word = "jimmy";
+			console.log(word.includes('y'));
+
+			var array = ['jim','kin'];//true
+			console.log(array.includes('jim'));//true
+
+			//该方法的第二个参数表示搜索的起始位置，默认为0。如果第二个参数为负数，则表示倒数的位置，如果这时它大于数组长度（比如第二个参数为-4，但数组长度为3），则会重置为从0开始。
+			var numbers = [1,2,3];
+			console.log(numbers.includes(3,3));//false
+			console.log(numbers.includes(3,-1));//true;
+
+			//下面代码用来检查当前环境是否支持该方法，如果不支持，部署一个简易的替代版本。
+
+			const contains = (() =>
+			  Array.prototype.includes
+			    ? (arr, value) => arr.includes(value)
+			    : (arr, value) => arr.some(el => el === value)
+			)();
+			contains(["foo", "bar"], "baz"); // => false
+			/*
+			Map和Set数据结构有一个has方法，需要注意与includes区分。
+
+			Map结构的has方法，是用来查找键名的，比如Map.prototype.has(key)、WeakMap.prototype.has(key)、Reflect.has(target, propertyKey)。
+			Set结构的has方法，是用来查找值的，比如Set.prototype.has(value)、WeakSet.prototype.has(value)
+			*/
+		}
+		fun7();
+		/*
+		数组的空位 § ⇧
+		数组的空位指，数组的某一个位置没有任何值。比如，Array构造函数返回的数组都是空位。
+		*/
+
+		function fun8 () {
+			console.log(0 in [undefined,undefined,undefined]);//true
+			console.log(0 in [,,,]);//false
+			/*
+			上面代码说明，第一个数组的0号位置是有值的，第二个数组的0号位置没有值。
+
+			ES5对空位的处理，已经很不一致了，大多数情况下会忽略空位。
+
+			forEach(), filter(), every() 和some()都会跳过空位。
+			map()会跳过空位，但会保留这个值
+			join()和toString()会将空位视为undefined，而undefined和null会被处理成空字符串。
+			*/
+			// forEach方法
+			[,'a'].forEach((x,i) => console.log(i)); // 1
+
+			// filter方法
+			['a',,'b'].filter(x => true); // ['a','b']
+
+			// every方法
+			[,'a'].every(x => x==='a'); // true
+
+			// some方法
+			[,'a'].some(x => x !== 'a'); // false
+
+			// map方法
+			[,'a'].map(x => 1); // [,1]
+
+			// join方法
+			[,'a',undefined,null].join('#'); // "#a##"
+
+			// toString方法
+			[,'a',undefined,null].toString(); // ",a,,"
+
+			//ES6则是明确将空位转为undefined。
+			var ar = Array.from(['a',,'b']);
+			console.log(ar);//[ "a", undefined, "b" ]
+			//扩展运算符（...）也会将空位转为undefined
+			var ar2 = [...['a',,'b']];
+			console.log(ar2);
+// [ "a", undefined, "b" ]
+		}
+		fun8();
 	</script>
 </body>
 </html>
