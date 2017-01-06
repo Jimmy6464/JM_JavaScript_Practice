@@ -453,6 +453,329 @@
 
 		}
 		fun6();
+		/*
+		属性的遍历 
+		*/
+		function fun7() {
+			/*
+			ES6一共有5种方法可以遍历对象的属性。
+
+			（1）for...in
+
+			for...in循环遍历对象自身的和继承的可枚举属性（不含Symbol属性）。
+
+			（2）Object.keys(obj)
+
+			Object.keys返回一个数组，包括对象自身的（不含继承的）所有可枚举属性（不含Symbol属性）。
+
+			（3）Object.getOwnPropertyNames(obj)
+
+			Object.getOwnPropertyNames返回一个数组，包含对象自身的所有属性（不含Symbol属性，但是包括不可枚举属性）。
+
+			（4）Object.getOwnPropertySymbols(obj)
+
+			Object.getOwnPropertySymbols返回一个数组，包含对象自身的所有Symbol属性。
+
+			（5）Reflect.ownKeys(obj)
+
+			Reflect.ownKeys返回一个数组，包含对象自身的所有属性，不管是属性名是Symbol或字符串，也不管是否可枚举。
+
+			以上的5种方法遍历对象的属性，都遵守同样的属性遍历的次序规则。
+
+			首先遍历所有属性名为数值的属性，按照数字排序。
+			其次遍历所有属性名为字符串的属性，按照生成时间排序。
+			最后遍历所有属性名为Symbol值的属性，按照生成时间排序。
+			*/
+			var arr = Reflect.ownKeys({ [Symbol()]:0, b:0, 10:0, 2:0, a:0 });
+			console.log(arr);// ['2', '10', 'b', 'a', Symbol()]
+			// console.log(arr.__proto__);
+			//上面代码中，Reflect.ownKeys方法返回一个数组，包含了参数对象的所有属性。这个数组的属性次序是这样的，首先是数值属性2和10，其次是字符串属性b和a，最后是Symbol属性。
+		}
+		fun7();
+		/*
+		__proto__属性，Object.setPrototypeOf()，Object.getPrototypeOf()
+		*/
+		function fun8() {
+			//（1）__proto__属性
+			//__proto__属性（前后各两个下划线），用来读取或设置当前对象的prototype对象。目前，所有浏览器（包括IE11）都部署了这个属性。
+			// es6的写法
+			var someOtherObj = [1,2];
+			var obj = {
+			  method: function() { }
+			};
+			obj.__proto__ = someOtherObj;
+
+			// es5的写法
+			var obj2 = Object.create(someOtherObj);
+			obj2.method = function() {  };
+			console.log(obj2);
+			/*
+			该属性没有写入ES6的正文，而是写入了附录，原因是__proto__前后的双下划线，说明它本质上是一个内部属性，而不是一个正式的对外的API，只是由于浏览器广泛支持，才被加入了ES6。标准明确规定，只有浏览器必须部署这个属性，其他运行环境不一定需要部署，而且新的代码最好认为这个属性是不存在的。因此，无论从语义的角度，还是从兼容性的角度，都不要使用这个属性，而是使用下面的Object.setPrototypeOf()（写操作）、Object.getPrototypeOf()（读操作）、Object.create()（生成操作）代替。
+			*/
+
+			//（2）Object.setPrototypeOf()
+			//Object.setPrototypeOf方法的作用与__proto__相同，用来设置一个对象的prototype对象。它是ES6正式推荐的设置原型对象的方法。
+			// 格式
+			// Object.setPrototypeOf(object, prototype)
+
+			// 用法
+			var o = Object.setPrototypeOf({}, {"name":"jimmy"});
+			console.log(o);
+			//该方法等同于下面的函数。
+			function fun(anObj, anProto) {
+			  obj.__proto__ = anProto;
+			  return anObj;
+			}
+
+			//例子
+			let proto = {};
+			let obj3 = { x: 10 };
+			Object.setPrototypeOf(obj3, proto);
+
+			proto.y = 20;
+			proto.z = 40;
+
+			console.log(obj3.x); // 10
+			console.log(obj3.y); // 20
+			console.log(obj3.z); // 40
+			console.log("obj : ",obj3);
+			//上面代码将proto对象设为obj对象的原型，所以从obj对象可以读取proto对象的属性。
+		}
+		fun8();
+		/*
+		Object.keys()，Object.values()，Object.entries()
+		*/
+		function fun9() {
+			//1. Object.keys()
+			//ES5 引入了Object.keys方法，返回一个数组，成员是参数对象自身的（不含继承的）所有可遍历（enumerable）属性的键名。
+			var obj1 = { foo: 'bar', baz: 42 };
+			console.log(Object.keys(obj1));//returns an array,["foo", "baz"]
+			//ES2017 引入了跟Object.keys配套的Object.values和Object.entries，作为遍历一个对象的补充手段。
+			let {keys, values, entries} = Object;
+			let obj = { a: 1, b: 2, c: 3 };
+
+			for (let key of keys(obj)) {
+			  console.log(key); // 'a', 'b', 'c'
+			}
+
+			for (let value of values(obj)) {
+			  console.log(value); // 1, 2, 3
+			}
+
+			for (let [key, value] of entries(obj)) {
+			  console.log([key, value]); // ['a', 1], ['b', 2], ['c', 3]
+			}
+
+			//2. Object.values()
+			//Object.values方法返回一个数组，成员是参数对象自身的（不含继承的）所有可遍历（enumerable）属性的键值。
+			console.log(Object.values(obj1));//returns an array, ["bar", 42]
+			//返回数组的成员顺序，与本章的《属性的遍历》部分介绍的排列规则一致。
+			var obj2 = { 100: 'a', 2: 'b', 7: 'c' };
+			console.log(Object.values(obj2));//returns an array, ["b", "c", "a"]
+			//上面代码中，属性名为数值的属性，是按照数值大小，从小到大遍历的，因此返回的顺序是b、c、a。
+
+			//Object.values只返回对象自身的可遍历属性。
+			var obj3 = Object.create({},{p:{value:43}});
+			console.log(Object.values(obj3));//returns, []
+			//上面代码中，Object.create方法的第二个参数添加的对象属性（属性p），如果不显式声明，默认是不可遍历的，因为p是继承的属性，而不是对象自身的属性。Object.values不会返回这个属性。
+
+			//Object.values会过滤属性名为 Symbol 值的属性。
+			console.log(Object.values(Object.create({ [Symbol()]: 123, foo: 'abc' })));//returns []
+
+			//如果Object.values方法的参数是一个字符串，会返回各个字符组成的一个数组。
+			console.log(Object.values("jimmy"));
+			Object.values(42); // []
+			Object.values(true); // []
+
+			//2.Object.entries()
+			//Object.entries方法返回一个数组，成员是参数对象自身的（不含继承的）所有可遍历（enumerable）属性的键值对数组。
+			var obj4 = { foo: 'bar', baz: 42 };
+			console.log(Object.entries(obj4));
+			// [ ["foo", "bar"], ["baz", 42] ],[Array[2], Array[2]]
+			console.log(Object.entries({ [Symbol()]: 123, foo: 'abc' }));
+			//面代码中，原对象有两个属性，Object.entries只输出属性名非Symbol值的属性。将来可能会有Reflect.ownEntries()方法，返回对象自身的所有属性。
+
+			//Object.entries的基本用途是遍历对象的属性。
+			let obj5 = { one: 1, two: 2 };
+			for (let [k, v] of Object.entries(obj5)) {
+			  console.log(`${JSON.stringify(k)}: ${JSON.stringify(v)}`);
+			}
+			// "one": 1
+			// "two": 2
+			//1
+			var student = new Object(); 
+			student.name = "Lanny"; 
+			student.age = "25"; 
+			student.location = "China"; 
+			var json = JSON.stringify(student); //对象转JSON
+			alert(json); //{"name":"Lanny","age":"25","location":"China"}
+			// alert(student);
+
+			//Object.entries方法的一个用处是，将对象转为真正的Map结构。
+			var obj6 = { foo: 'bar', baz: 42 };
+			var map = new Map(Object.entries(obj6));
+			console.log(map); // Map {"foo" => "bar", "baz" => 42}
+
+			//自己实现Object.entries方法，非常简单。
+			// Generator函数的版本
+			function* entries1(obj) {
+			  for (let key of Object.keys(obj)) {
+			    yield [key, obj[key]];
+			  }
+			}
+			var obj7= entries1({age:12,name:'json'});
+
+			console.log(obj7.next());//Object {value: Array[2], done: false}
+			// 非Generator函数的版本
+			function entries2(obj) {
+			  let arr = [];
+			  for (let key of Object.keys(obj)) {
+			    arr.push([key, obj[key]]);
+			  }
+			  return arr;
+			}
+			var obj8 =  entries2({age:12,name:'json'});
+			console.log(obj8);//[Array[2], Array[2]]
+		}
+		fun9();
+		/*
+		对象的扩展运算符
+		*/
+		function fun10() {
+			// （1）解构赋值
+			// 对象的解构赋值用于从一个对象取值，相当于将所有可遍历的、但尚未被读取的属性，分配到指定的对象上面。所有的键和它们的值，都会拷贝到新对象上面。
+			'user strict'
+			// let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 }; something was wrong
+			// console.('\nfun10\n',x,y,z);
+
+
+			// （2）扩展运算符
+			// 扩展运算符（...）用于取出参数对象的所有可遍历属性，拷贝到当前对象之中。
+			/*
+			let z = { a: 3, b: 4 };
+			let n = { ...z };
+			n // { a: 3, b: 4 }
+
+			这等同于使用Object.assign方法。
+			let aClone = { ...a };
+			// 等同于
+			let aClone = Object.assign({}, a);
+
+			扩展运算符可以用于合并两个对象。
+			let ab = { ...a, ...b };
+			// 等同于
+			let ab = Object.assign({}, a, b);
+			
+			如果用户自定义的属性，放在扩展运算符后面，则扩展运算符内部的同名属性会被覆盖掉。
+			let aWithOverrides = { ...a, x: 1, y: 2 };
+			// 等同于
+			let aWithOverrides = { ...a, ...{ x: 1, y: 2 } };
+			// 等同于
+			let x = 1, y = 2, aWithOverrides = { ...a, x, y };
+			// 等同于
+			let aWithOverrides = Object.assign({}, a, { x: 1, y: 2 });
+
+			上面代码中，a对象的x属性和y属性，拷贝到新对象后会被覆盖掉。
+
+			这用来修改现有对象部分的部分属性就很方便了。
+			let newVersion = {
+			  ...previousVersion,
+			  name: 'New Name' // Override the name property
+			};
+
+			扩展运算符的参数对象之中，如果有取值函数get，这个函数是会执行的。
+			// 并不会抛出错误，因为x属性只是被定义，但没执行
+			let aWithXGetter = {
+			  ...a,
+			  get x() {
+			    throws new Error('not thrown yet');
+			  }
+			};
+
+			// 会抛出错误，因为x属性被执行了
+			let runtimeError = {
+			  ...a,
+			  ...{
+			    get x() {
+			      throws new Error('thrown now');
+			    }
+			  }
+			};
+
+			如果扩展运算符的参数是null或undefined，这个两个值会被忽略，不会报错。
+			let emptyObject = { ...null, ...undefined }; // 不报错
+
+			*/
+		
+		}
+		fun10;
+
+		/*
+		Object.getOwnPropertyDescriptors() 
+		*/
+		function fun11() {
+			//ES5有一个Object.getOwnPropertyDescriptor方法，返回某个对象属性的描述对象（descriptor）。
+			var obj = { p: 'a' };
+
+			console.log(Object.getOwnPropertyDescriptor(obj, 'p'));//returns an object,Object {value: "a", writable: true, enumerable: true, configurable: true}
+
+			//Object.getOwnPropertyDescriptors方法的另一个用处，是配合Object.create方法，将对象属性克隆到一个新对象。这属于浅拷贝。
+			const clone = Object.create(Object.getPrototypeOf(obj),
+			  Object.getOwnPropertyDescriptors(obj));
+
+			// 或者
+
+			const shallowClone = (obj) => Object.create(
+			  Object.getPrototypeOf(obj),
+			  Object.getOwnPropertyDescriptors(obj)
+			);
+
+			//上面代码会克隆对象obj。
+
+			// 另外，Object.getOwnPropertyDescriptors方法可以实现，一个对象继承另一个对象。以前，继承另一个对象，常常写成下面这样。
+			const obj1 = {
+			  __proto__: clone,
+			  foo: 123,
+			};
+			//ES6规定__proto__只有浏览器要部署，其他环境不用部署。如果去除__proto__，上面代码就要改成下面这样
+			const obj2 = Object.create(clone);
+			obj2.foo = 123;
+
+			// 或者
+
+			const obj3 = Object.assign(
+			  Object.create(clone),
+			  {
+			    foo: 123,
+			  }
+			);
+
+			//有了Object.getOwnPropertyDescriptors，我们就有了另一种写法。
+			const obj4 = Object.create(
+			  clone,
+			  Object.getOwnPropertyDescriptors({
+			    foo: 123,
+			  })
+			);
+			//Object.getOwnPropertyDescriptors也可以用来实现Mixin（混入）模式。
+			let mix = (object) => ({
+			  with: (...mixins) => mixins.reduce(
+			    (c, mixin) => Object.create(
+			      c, Object.getOwnPropertyDescriptors(mixin)
+			    ), object)
+			});
+
+			// multiple mixins example
+			let a = {a: 'a'};
+			let b = {b: 'b'};
+			let c = {c: 'c'};
+			let d = mix(c).with(a, b);
+			console.log('d',d);//return  Object {b: "b"}
+			//上面代码中，对象a和b被混入了对象c。
+
+			// 出于完整性的考虑，Object.getOwnPropertyDescriptors进入标准以后，还会有Reflect.getOwnPropertyDescriptors方法。
+		}
+		fun11();
 	</script>
 </body>
 </html>
