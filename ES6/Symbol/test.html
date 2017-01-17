@@ -5,6 +5,7 @@
 </head>
 <body>
 	<h1>Symbol</h1>
+	<script type="text/javascript" src="r.js"></script>
 	<script type="text/javascript">
 		//Symbol
 		//ES6引入了一种新的原始数据类型Symbol，表示独一无二的值。它是JavaScript语言的第七种数据类型，前六种是：Undefined、Null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）。
@@ -217,6 +218,15 @@
 
 		}
 		fun4();
+		/*
+		实例：模块的 Singleton 模式 
+		*/
+		function fun5() {
+			var a = require('./mod.js')//使用了require.js
+
+			console.log(a.foo);
+		}
+		fun5();
 	</script>
 </body>
 </html>

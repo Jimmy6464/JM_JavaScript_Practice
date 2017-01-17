@@ -1,7 +1,7 @@
 function A() {
 	this.foo = 'hello';
 }	
-if (!global._foo) {
-	global._foo = new A();
+if (!global.foo) {
+	global.foo = new A();
 }
-module.exports = global._foo;
+module.exports = global.foo;
