@@ -1,7 +1,10 @@
+// mod.js
 function A() {
-	this.foo = 'hello';
-}	
-if (!global.foo) {
-	global.foo = new A();
+  this.foo = 'hello';
 }
-module.exports = global.foo;
+
+if (!global._foo) {
+  global._foo = new A();
+}
+
+module.exports = global._foo;
