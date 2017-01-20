@@ -259,12 +259,111 @@
 			//Symbol.isConcatSpreadable
 			//对象的Symbol.isConcatSpreadable属性等于一个布尔值，表示该对象使用Array.prototype.concat()时，是否可以展开。
 			let arr1 = ['c','d'];
-			console.log(['a','b'].concat(arr1,'e'));
-			console.log(arr1[Symbol.isConcatSpreadable]);
+			console.log(['a','b'].concat(arr1,'e'));// ["a", "b", "c", "d", "e"]
+			console.log(arr1[Symbol.isConcatSpreadable]);//undefined
 
-			let arr2 = ['c',]
+			let arr2 = ['c','d'];
+			arr2[Symbol.isConcatSpreadable] = false;
+			console.log(['a', 'b'].concat(arr2, 'e')); // ['a', 'b', ['c','d'], 'e']
+			//上面代码说明，数组的默认行为是可以展开。Symbol.isConcatSpreadable属性等于true或undefined，都有这个效果。
+
+			//类似数组的对象也可以展开，但它的Symbol.isConcatSpreadable属性默认为false，必须手动打开。
+			let obj = {length:2,0:'c',1:'d'};
+			console.log(['a','b'].concat(obj,'e'));//["a", "b", Object, "e"]
+
+			obj[Symbol.isConcatSpreadable] = true;
+			console.log(['a','b'].concat(obj,'e'));//["a", "b", "c", "d", "e"]
+
+			//对于一个类来说，Symbol.isConcatSpreadable属性必须写成实例的属性。
+			class A1 extends Array{
+				constructor(args){
+					super(args);
+					this[Symbol.isConcatSpreadable] = true;
+				}
+			}
+			class A2 extends Array{
+				constructor(args){
+					super(args);
+					this[Symbol.isConcatSpreadable] = false;
+				}
+			}
+
+			let a1 = new A1();
+			a1[0] = 3;
+			a1[1] = 4;
+			let a2 = new A2();
+			a2[0] = 5;
+			a2[1] = 6;
+			console.log([1,2].concat(a1).concat(a2));//[1, 2, 3, 4, A2[2]]
+			// 上面代码中，类A1是可展开的，类A2是不可展开的，所以使用concat时有不一样的结果。
+
+				/*
+			Symbol.species 
+			对象的Symbol.species属性，指向当前对象的构造函数。创造实例时，默认会调用这个方法，即使用这个属性返回的函数当作构造函数，来创造新的实例对象。
+			*/
+			function fun6_1() {
+				class MyArray extends Array{
+					// 覆盖父类 Array 的构造函数
+					static get [Symbol.species]() {
+						return Array;
+					}
+				}
+
+				var tmp = new MyArray(1,2,3);
+				var mapped = tmp.map(x=> x*x);
+				console.log('tmp',tmp,'mapped:',mapped);//tmp [1, 2, 3] mapped: [1, 4, 9]
+				console.log(mapped instanceof MyArray);//false
+				console.log(mapped instanceof Array);//true
+				//上面代码中，由于构造函数被替换成了Array。所以，mapped对象不是MyArray的实例，而是Array的实例。
+			}
+			fun6_1();
+
+			/*
+			Symbol.match
+			对象的Symbol.match属性，指向一个函数。当执行str.match(myObject)时，如果该属性存在，会调用它，返回该方法的返回值。
+			*/
+			function fun6_2() {
+				/*
+
+				String.prototype.match(regexp);
+				// 等同于
+				regexp[Symbol.match](this)
+				*/
+				class MyMatcher {
+				  [Symbol.match](string) {
+				    return 'hello world'.indexOf(string);
+				  }
+				}
+
+				console.log('e'.match(new MyMatcher())); // 1
+			}
+			fun6_2();
+
+			/*
+			Symbol.search
+			对象的Symbol.search属性，指向一个方法，当该对象被String.prototype.search方法调用时，会返回该方法的返回值。
+			*/
+			function fun6_3() {
+				/*
+				String.prototype.search(regexp)
+				// 等同于
+				regexp[Symbol.search](this)
+				*/
+								
+				class MySearch {
+				  constructor(value) {
+				    this.value = value;
+				  }
+				  [Symbol.search](string) {
+				    return string.indexOf(this.value);
+				  }
+				}
+				'foobar'.search(new MySearch('foo')) // 0
+			}
+
 		}
 		fun6();
+		
 	</script>
 </body>
 </html>
