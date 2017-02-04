@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>Set and Map</head>
+	<body>
+		<h1>Set and Map By Jimmy</h1>
+		<h1>This is for testing</h1>
+		<script type="text/javascript">
+			/*
+				1, Set
+			*/
+			function method_01 () {
+				/*
+				基本用法
+				ES6 提供了新的数据结构 Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。
+
+				Set 本身是一个构造函数，用来生成 Set 数据结构。
+				*/
+				const s = new Set();
+				var array = [2,3,5,4,5,3,4,2];
+				array.forEach(x => s.add(x));
+				console.log('original array:',array);
+				console.log(s);//Set {2, 3, 5, 4}
+				//上面代码通过add方法向 Set 结构加入成员，结果表明 Set 结构不会添加重复的值。
+
+				//Set 函数可以接受一个数组（或类似数组的对象）作为参数，用来初始化
+				
+				//example 1
+				var set = new Set(array);
+				//example 2
+				console.log(set,' size: ',set.size);//Set {2, 3, 5, 4}" size: " 4
+
+				//example 3
+				function getH1s () {
+					return [...document.querySelectorAll('h1')];
+				}
+				var set2 = new Set(getH1s());
+				console.log(set2," and its size is ",set2.size);//Set {h1 {},h1 {}} " and its size is " 2
+
+
+			}
+			method_01();
+		</script>
+	</body>
+</html>
