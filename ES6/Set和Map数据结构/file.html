@@ -4,6 +4,7 @@
 	<body>
 		<h1>Set and Map By Jimmy</h1>
 		<h1>This is for testing</h1>
+		<p id='demo'>Testing</p>
 		<script type="text/javascript">
 			/*
 				1, Set
@@ -199,13 +200,13 @@
 					function methodsTest() {
 						// 方法一
 
-						let set = new Set([1, 2, 3]);
-						set = new Set([...set].map(val => val * 2));
+						let set5 = new Set([1, 2, 3]);
+						set5 = new Set([...set5].map(val => val * 2));
 						// set的值是2, 4, 6
 
 						// 方法二
-						let set = new Set([1, 2, 3]);
-						set = new Set(Array.from(set, val => val * 2));
+						let set6 = new Set([1, 2, 3]);
+						set6 = new Set(Array.from(set6, val => val * 2));
 						// set的值是2, 4, 6
 					}
 					methodsTest();
@@ -213,6 +214,274 @@
 				fun1_3();
 			}
 			method_01();
+			/*
+			2.WeakSet
+			WeakSet结构与Set类似，也是不重复的值的集合。但是，它与Set有两个区别。
+
+			首先，WeakSet的成员只能是对象，而不能是其他类型的值。
+
+			其次，WeakSet中的对象都是弱引用，即垃圾回收机制不考虑WeakSet对该对象的引用，也就是说，如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存，不考虑该对象还存在于WeakSet之中。这个特点意味着，无法引用WeakSet的成员，因此WeakSet是不可遍历的。
+			*/
+			function method_02 () {
+				/*
+				var ws = new WeakSet();
+				ws.add(1)
+				// TypeError: Invalid value used in weak set
+				ws.add(Symbol())
+				// TypeError: invalid value used in weak set
+				*/
+
+				//上面代码试图向WeakSet添加一个数值和Symbol值，结果报错，因为WeakSet只能放置对象。
+
+
+				//作为构造函数，WeakSet可以接受一个数组或类似数组的对象作为参数。（实际上，任何具有iterable接口的对象，都可以作为WeakSet的参数。）该数组的所有成员，都会自动成为WeakSet实例对象的成员
+				var a = [[1,2],[3,4]];
+				var ws = new WeakSet(a);
+				console.log(ws);//WeakSet {[1, 2], [3, 4]}
+				//注意，是a数组的成员成为WeakSet的成员，而不是a数组本身。这意味着，数组的成员只能是对象
+
+
+				/*
+				WeakSet结构有以下三个方法。
+
+				WeakSet.prototype.add(value)：向WeakSet实例添加一个新成员。
+				WeakSet.prototype.delete(value)：清除WeakSet实例的指定成员。
+				WeakSet.prototype.has(value)：返回一个布尔值，表示某个值是否在WeakSet实例之中。
+				*/
+				var ws2 = new WeakSet();
+				var obj = {};
+				var foo = {};
+
+				ws2.add(window);
+				ws2.add(obj);
+				console.log(ws2);
+
+				console.log(ws2.has(window));//true
+				console.log(ws2.has(foo));//false
+
+				ws2.delete(window);
+				console.log(ws.has(window));//false
+				/*
+				WeakSet没有size属性，没有办法遍历它的成员。
+
+				ws.size // undefined
+				ws.forEach // undefined
+
+				ws.forEach(function(item){ console.log('WeakSet has ' + item)})
+				// TypeError: undefined is not a function
+				上面代码试图获取size和forEach属性，结果都不能成功。
+
+				WeakSet不能遍历，是因为成员都是弱引用，随时可能消失，遍历机制无法保证成员的存在，很可能刚刚遍历结束，成员就取不到了。WeakSet的一个用处，是储存DOM节点，而不用担心这些节点从文档移除时，会引发内存泄漏。
+				*/
+
+				//example
+				const foos = new WeakSet();
+				class Foo{
+					constructor(){
+						foos.add(this);
+					}
+					method(){
+						if (!foos.has(this)) {
+							throw new TypeError('Foo.prototype.method 只能在Foo实例上调用');
+						}else{
+							console.log('foos has this');
+						}
+					}
+				}
+				var class1 = new Foo();
+				class1.method();
+				console.log(class1);
+				console.log(foos.has(class1));//true
+			}
+			method_02();
+			/*
+			3.Map
+			Map结构的目的和基本用法 § ⇧
+			JavaScript的对象（Object），本质上是键值对的集合（Hash结构），但是传统上只能用字符串当作键。这给它的使用带来了很大的限制。
+			*/
+			function method_03 () {
+				
+
+				function fun3_0 () {
+					var data = {};
+					var element = document.getElementById('demo');
+					data[element]='metadata';
+					console.log(data);
+					console.log(data['[object HTMLParagraphElement]']);
+					//上面代码原意是将一个DOM节点作为对象data的键，但是由于对象只接受字符串作为键名，所以element被自动转为字符串[object HTMLParagraphElement]。
+
+					//为了解决这个问题，ES6提供了Map数据结构。它类似于对象，也是键值对的集合，但是“键”的范围不限于字符串，各种类型的值（包括对象）都可以当作键。也就是说，Object结构提供了“字符串—值”的对应，Map结构提供了“值—值”的对应，是一种更完善的Hash结构实现。如果你需要“键值对”的数据结构，Map比Object更合适。
+
+					var m = new Map();
+					var o = {p:'hello world'};
+					m.set(o,'content');
+					console.log(m.get(o));//content
+					console.log(m);//Map {Object {p: "hello world"} => "content"}
+					console.log(m.has(o));//true
+					m.delete(o);
+					console.log(m.has(o));//false
+					console.log(m.size);//0
+					//上面代码使用set方法，将对象o当作m的一个键，然后又使用get方法读取这个键，接着使用delete方法删除了这个键。
+
+					//作为构造函数，Map也可以接受一个数组作为参数。该数组的成员是一个个表示键值对的数组
+					var map = new Map([['name','jimmy'],['title','author']]);
+					console.log("map's size is ",map.size);//map's size is  2
+					console.log(map.has('name'));//true
+					console.log(map.get('name'));//jimmy
+					console.log(map.has('title'));//true
+					console.log(map.get('title'));//author
+					console.log(map);//Map {"name" => "jimmy", "title" => "author"}
+					//上面代码在新建Map实例时，就指定了两个键name和title。
+
+					//Map构造函数接受数组作为参数，实际上执行的是下面的算法。
+					var items = [['name','jimmy'],['title','author']];
+					var map2 = new Map();
+					items.forEach(([key,values]) => map2.set(key,values));
+					console.log(map2);//Map {"name" => "jimmy", "title" => "author"}
+					//如果对同一个键多次赋值，后面的值将覆盖前面的值。
+					let map3 = new Map();
+					map3.set(1,'aaa');
+					console.log(map3.get(1));//aaa
+					map3.set(1,'jim');
+					console.log(map3.get(1));//jim
+					//如果读取一个未知的键，则返回undefined。
+
+					console.log(map3.get(2));//undefined
+					//注意，只有对同一个对象的引用，Map结构才将其视为同一个键。这一点要非常小心。
+					var map4 = new Map();
+					map.set(['a'],555);
+					console.log(map.get(['a']));//undefined
+					//由上可知，Map的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键。这就解决了同名属性碰撞（clash）的问题，我们扩展别人的库的时候，如果使用对象作为键名，就不用担心自己的属性与原作者的属性同名。
+
+					//如果Map的键是一个简单类型的值（数字、字符串、布尔值），则只要两个值严格相等，Map将其视为一个键，包括0和-0。另外，虽然NaN不严格相等于自身，但Map将其视为同一个键。
+
+					let map5 = new Map();
+					map5.set(NaN,123);
+					console.log(map5.get(NaN));//123
+
+					map5.set(-0,123);
+					console.log(map5.get(+0));//123	
+				}
+				fun3_0();
+				/*
+				实例的属性和操作方法
+				*/
+				function fun3_1 () {
+					//1 size属性
+					let map  = new Map();
+					map.set('foo',true);
+					map.set('bar',false);
+					console.log("map's size is ",map.size);//map's size is 2
+					//2 set(key,value)
+					//set方法设置key所对应的键值，然后返回整个Map结构。如果key已经有值，则键值会被更新，否则就新生成该键。
+					map.set('foo','new');
+					console.log(map.get('foo'));//new
+					map.set("edition", 6)        // 键是字符串
+					map.set(262, "standard")     // 键是数值
+					map.set(undefined, "nah")    // 键是undefined
+
+					//set方法返回的是Map本身，因此可以采用链式写法
+					map.set(1,'a').set(2,'b').set(3,'b');
+					console.log(map);
+
+					//3 get (key)
+					// get方法读取key对应的键值，如果找不到key，返回undefined。
+					console.log(map.get(2),map.get('no'));//b undefined
+
+					//4 has(key)
+					//has方法返回一个布尔值，表示某个键是否在Map数据结构中。
+					console.log(map.has(1),map.has('a'));//true false
+
+					//5 delete(key)
+					//delete方法删除某个键，返回true。如果删除失败，返回false
+					console.log(map.delete(1));//true
+					console.log(map.delete('a'));//false
+
+					//6 clear()
+					//clear 方法清除所有成员，没有返回值
+					map.clear();
+					console.log(map.size);//0
+				}
+				fun3_1();
+				/*
+				Map原生提供三个遍历器生成函数和一个遍历方法。
+
+				keys()：返回键名的遍历器。
+				values()：返回键值的遍历器。
+				entries()：返回所有成员的遍历器。
+				forEach()：遍历Map的所有成员。
+				需要特别注意的是，Map的遍历顺序就是插入顺序。
+				*/
+				function fun3_2 () {
+					//下面是使用实例
+					let map = new Map([
+							['F','no'],
+							['T','yes'],
+						]);
+					for(let key of map.keys()){
+						console.log(key);
+					}
+					//'F'
+					//'T'
+					for(let values of map.values()){
+						console.log(values);
+					}
+					//'no'
+					//'yes'
+					for(let item of map.entries()){
+						console.log(item,item[0],item[1]);
+					}
+					//["F", "no"] "F" "no"
+					//["T", "yes"] "T" "yes"
+					// 或者
+					for (let [key, value] of map.entries()) {
+					  console.log(key, value);
+					}
+
+					// 等同于使用map.entries()
+					for (let [key, value] of map) {
+					  console.log(key, value);
+					}
+					//上面代码最后的那个例子，表示Map结构的默认遍历器接口（Symbol.iterator属性），就是entries方法。
+					console.log(map[Symbol.iterator] === map.entries);//true
+					//Map结构转为数组结构，比较快速的方法是结合使用扩展运算符（...）。
+					console.log([...map.keys()]);//["F", "T"]
+					console.log([...map.values()]);//["no", "yes"]
+					console.log([...map.entries()]);//[Array[2], Array[2]]
+					console.log([...map]);//[Array[2], Array[2]]
+
+					//结合数组的map方法、filter方法，可以实现Map的遍历和过滤（Map本身没有map和filter方法）。
+					let map0 = new Map().set(1,'a').set(2,'b').set(3,'b');
+					let map1 = new Map(
+							[...map0].filter(([k,v])=> k<3)
+						);//// 产生Map结构 {1 => 'a', 2 => 'b'}
+
+					let map2 = new Map(
+					  [...map0].map(([k, v]) => [k * 2, '_' + v])
+					    );
+					// 产生Map结构 {2 => '_a', 4 => '_b', 6 => '_c'}
+
+					//此外，Map还有一个forEach方法，与数组的forEach方法类似，也可以实现遍历
+					map.forEach(function(value, key, map) {
+					console.log("Key: %s, Value: %s", key, value);
+
+					//forEach方法还可以接受第二个参数，用来绑定this。
+					var reporter = {
+						report:function(key,value){
+							console.log("Key:%s, Value: %s",key,value);
+						}
+					}
+					map.forEach(function(value,key,map){
+						this.report(key,value);
+					},reporter);
+	});
+
+				}
+				fun3_2();
+
+
+			}
+			method_03();
 		</script>
 	</body>
 </html>
