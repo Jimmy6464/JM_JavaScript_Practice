@@ -15,7 +15,8 @@
 
 				Set 本身是一个构造函数，用来生成 Set 数据结构。
 				*/
-				const s = new Set();
+				function fun1_1() {
+					const s = new Set();
 				var array = [2,3,5,4,5,3,4,2];
 				array.forEach(x => s.add(x));
 				console.log('original array:',array);
@@ -36,7 +37,180 @@
 				var set2 = new Set(getH1s());
 				console.log(set2," and its size is ",set2.size);//Set {h1 {},h1 {}} " and its size is " 2
 
+				//向Set加入值的时候，不会发生类型转换，所以5和"5"是两个不同的值。Set内部判断两个值是否不同，使用的算法叫做“Same-value equality”，它类似于精确相等运算符（===），主要的区别是NaN等于自身，而精确相等运算符认为NaN不等于自身
+				let set3 = new Set();
+				let a = NaN;
+				let b = NaN;
+				set3.add(a);
+				set3.add(b);
+				console.log(set3);//NaN
+				// 上面代码向Set实例添加了两个NaN，但是只能加入一个。这表明，在Set内部，两个NaN是相等。
 
+				//两个对象部是不相等
+				let set4 = new Set();
+				set4.add({});
+				set4.add({});
+				console.log(set4,' and its size is ',set4.size);//and its size is " 2
+				//上面代码表示，由于两个空对象不相等，所以它们被视为两个值。
+				}
+				fun1_1();
+
+				/*
+				Set实例的属性和方法
+
+				Set结构的实例有以下属性。
+
+				Set.prototype.constructor：构造函数，默认就是Set函数。
+				Set.prototype.size：返回Set实例的成员总数。
+				Set实例的方法分为两大类：操作方法（用于操作数据）和遍历方法（用于遍历成员）。下面先介绍四个操作方法。
+
+				add(value)：添加某个值，返回Set结构本身。
+				delete(value)：删除某个值，返回一个布尔值，表示删除是否成功。
+				has(value)：返回一个布尔值，表示该值是否为Set的成员。
+				clear()：清除所有成员，没有返回值。
+				*/
+				function fun1_2() {
+					//example for the prototype and methods
+					var set1 = new Set();
+					set1.add(1).add(2).add(2);
+
+					console.log(set1.size);//2
+					console.log(set1.has(1));//true
+					console.log(set1.has(2));//true
+					console.log(set1.has(3));//false
+					console.log(set1.delete(2));//true
+					console.log(set1.has(2));//false
+
+					//下面是一个对比，看看在判断是否包括一个键上面，Object结构和Set结构的写法不同。
+					//object 
+					var obj = {
+						'width':1,
+						'height':3
+					};
+					if (obj['width']) {
+						console.log('it has the key named "width"');
+					}
+
+					//set
+					var obj2 = new Set();
+					obj2.add('width');
+					obj2.add('height');
+					if (obj2.has('height')) {
+						console.log('it has the key named "height"');
+					}
+
+					//Array.from 方法可以将Set结构转为数组。
+					var items = new Set([1,2,3,4,5]);
+					var array = Array.from(items);
+					console.log('items: ',items," and array : ",array);//items:  Set {1, 2, 3, 4, 5}  and array :  [1, 2, 3, 4, 5]
+
+					//去除数组重复成员
+					function dedupe(array) {
+						return Array.from(new Set(array));
+					}
+					dedupe([1,1,2,3,4]);
+
+				}
+				fun1_2();
+				/*
+				遍历操作
+				Set结构的实例有四个遍历方法，可以用于遍历成员。
+
+				keys()：返回键名的遍历器
+				values()：返回键值的遍历器
+				entries()：返回键值对的遍历器
+				forEach()：使用回调函数遍历每个成员
+				需要特别指出的是，Set的遍历顺序就是插入顺序。这个特性有时非常有用，比如使用Set保存一个回调函数列表，调用时就能保证按照添加顺序调用。
+				*/
+				function fun1_3() {
+					let set = new Set(['red','green','blue']);
+					for(let item of set.keys()){
+						console.log(item);
+					}
+					//red
+					//green
+					//blue
+					for(let item of set.values()){
+						console.log(item);
+					}
+					//red
+					//green
+					//blue
+					for (let item of set.entries()) {
+					  console.log(item);
+					}
+					// ["red", "red"]
+					// ["green", "green"]
+					// ["blue", "blue"]
+					//上面代码中，entries方法返回的遍历器，同时包括键名和键值，所以每次输出一个数组，它的两个成员完全相等。
+
+					// Set结构的实例默认可遍历，它的默认遍历器生成函数就是它的values方法。
+					Set.prototype[Symbol.iterator] === Set.prototype.values// true
+
+					// 这意味着，可以省略values方法，直接用for...of循环遍历Set。
+					for (let x of set) {
+					  console.log(x);
+					}
+					// red
+					// green
+					// blue
+
+					//forEach()
+					//Set结构的实例的forEach方法，用于对每个成员执行某种操作，没有返回值。
+					let set1 = new Set([1,2,3]);
+					set1.forEach((value, key) => console.log(value*2));//2 4 6
+					//上面代码说明，forEach方法的参数就是一个处理函数。该函数的参数依次为键值、键名、集合本身（上例省略了该参数）。另外，forEach方法还可以有第二个参数，表示绑定的this对象。
+
+					//（3）遍历的应用
+					//扩展运算符（...）内部使用for...of循环，所以也可以用于Set结构。
+					let arr1 = [...set];
+					console.log(arr1);//["red", "green", "blue"]
+
+					//扩展运算符和Set结构相结合，就可以去除数组的重复成员。
+					let arr = [3, 5, 2, 2, 5, 5];
+					let unique = [...new Set(arr)];//// [3, 5, 2]
+
+					//数组的map和filter方法也可以用于Set了,实际上也是用数组
+					let set3 = new Set([1,2,3]);
+					set3 = new Set([...set3].map(x => x*2));
+					console.log(set3);//Set {2, 4, 6}
+
+					let set4 = new Set([1,2,3,4,5]);
+					set4 = new Set([...set4].filter(x => (x%2)==0));
+					console.log(set4);//Set {2, 4}
+
+					// 因此使用Set可以很容易地实现并集（Union）、交集（Intersect）和差集（Difference）。
+					let a = new Set([1, 2, 3]);
+					let b = new Set([4, 3, 2]);
+
+					// 并集
+					let union = new Set([...a, ...b]);
+					// Set {1, 2, 3, 4}
+
+					// 交集
+					let intersect = new Set([...a].filter(x => b.has(x)));
+					// set {2, 3}
+
+					// 差集
+					let difference = new Set([...a].filter(x => !b.has(x)));
+					// Set {1}
+
+					// 如果想在遍历操作中，同步改变原来的Set结构，目前没有直接的方法，但有两种变通方法。一种是利用原Set结构映射出一个新的结构，然后赋值给原来的Set结构；另一种是利用Array.from方法。
+					function methodsTest() {
+						// 方法一
+
+						let set = new Set([1, 2, 3]);
+						set = new Set([...set].map(val => val * 2));
+						// set的值是2, 4, 6
+
+						// 方法二
+						let set = new Set([1, 2, 3]);
+						set = new Set(Array.from(set, val => val * 2));
+						// set的值是2, 4, 6
+					}
+					methodsTest();
+				}
+				fun1_3();
 			}
 			method_01();
 		</script>
