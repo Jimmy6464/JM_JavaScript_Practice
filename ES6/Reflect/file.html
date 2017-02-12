@@ -195,6 +195,99 @@
                          */
                     }
                     fun_01_2();
+
+                    /*Reflect.has(obj,name)*/
+                    function fun_01_03 () {
+                      var myObject = {
+                        foo:1,
+                      };
+
+                      //旧写法
+                      log('foo' in myObject);//true
+
+                      //新写法
+                      log(Reflect.has(myObject,'foo'));//true
+                      //如果第一个参数不是对象，Reflect.has和in运算符都会报错。
+                    }
+                    fun_01_03();
+
+                    /*
+                    Reflect.deleteProperty(obj, name)
+                    Reflect.deleteProperty方法等同于delete obj[name]，用于删除对象的属性。
+                    */
+                    function fun_01_04 () {
+                      const myObj = {foo:'bar'};
+
+                      //旧写法
+                      delete myObj.foo;
+
+                      //新写法
+                      Reflect.deleteProperty(myObj,'foo');//true
+                    }
+                    fun_01_04();
+
+                    /*
+                    Reflect.construct(target, args) 
+                    Reflect.construct方法等同于new target(...args)，这提供了一种不使用new，来调用构造函数的方法。
+                    */
+                    function fun_01_05 () {
+                      function Greeting (name) {
+                        this.name = name;
+                      }
+
+                      //new 的写
+                      const instance1 = new Greeting('jimmy');
+
+                      //Relect.construct的写法
+                      const instance2 = Reflect.construct(Greeting,['jimmy']);
+                      log(instance1,instance2);
+                    }
+                    fun_01_05();
+
+                    /*
+                    Reflect.getPrototypeOf(obj)
+                    Reflect.getPrototypeOf方法用于读取对象的__proto__属性，对应Object.getPrototypeOf(obj)。
+                    */
+                    function fun_01_06 () {
+                      function FancyThing (name) {  
+                        this.name = name;
+                      }
+                      const myObj = new FancyThing('name');
+                      //旧写法
+                      log(Object.getPrototypeOf(myObj) === FancyThing.prototype);//true
+
+                      //新写法
+                      log(Reflect.getPrototypeOf(myObj) === FancyThing.prototype);//true
+                      //Reflect.getPrototypeOf和Object.getPrototypeOf的一个区别是，如果第一个参数不是对象（包括null和undefined），Object.getPrototypeOf会将这个参数转为对象，然后再运行，而Reflect.getPrototypeOf会报错。
+                    }
+                    fun_01_06();
+                    /*
+                    Reflect.setPrototypeOf(obj, newProto)
+                    Reflect.setPrototypeOf方法用于设置对象的__proto__属性，对应Object.setPrototypeOf(obj, newProto)。
+                    */
+                    function fun_01_07 () {
+                       function FancyThing (name) {  
+                        this.name = name;
+                      }
+
+                      const obj = new FancyThing('name');
+                      const othObj = new FancyThing('age');
+                      log(othObj);
+                      log(typeof othObj);
+                      //旧写法
+                      log(Object.setPrototypeOf(obj,othObj));
+                      log(obj);
+
+                      //新写法
+                      othObj.gender = 'male';
+                      log(othObj);
+                      log(Reflect.setPrototypeOf(obj,othObj.prototype));
+                      log(othObj);
+
+                      //如果第一个参数不是对象，Reflect.setPrototypeOf和Object.setPrototypeOf都会报错。
+                    }
+                    fun_01_07();
+
                 }
                 fun_02();
             }
